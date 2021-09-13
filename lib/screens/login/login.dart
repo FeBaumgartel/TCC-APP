@@ -209,7 +209,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                             .validarLogin(email, senha);
                                         if (usuario != null) {
                                           await Navigator.pushNamed(
-                                              context, '/principal',
+                                              context, '/agenda',
                                               arguments: {'usuario': usuario});
                                         } else {_showDialog();}
                                       });

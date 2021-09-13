@@ -1,6 +1,6 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tcc_app/screens/login/login.dart';
-import 'package:tcc_app/screens/principal/principal.dart';
+import 'package:tcc_app/screens/agenda/agenda.dart';
 // import 'package:biribi_financas/screens/principal/principal.dart';
 // import 'package:biribi_financas/screens/movimentacao/movimentacao.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
@@ -13,7 +13,7 @@ import 'package:overlay_support/overlay_support.dart';
 class Routes {
   final routes = <String, WidgetBuilder>{
     '/login': (BuildContext context) => Login(),
-    '/principal': (BuildContext context) => Principal(),
+    '/agenda': (BuildContext context) => Agenda(),
   };
 
 
