@@ -21,10 +21,10 @@ class LayoutFormulario extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
-              Container(child: _renderWidget(model.dropdownValue!, context)),
+              Container(child: _renderWidget(model.dropdownValue, context)),
               _renderDataInicial(),
               _renderDataFinal(),
-              if (model.evento!.id != null) _renderCadastradoPor(),
+              if (model.evento.id != null) _renderCadastradoPor(),
               Padding(
                 padding: EdgeInsets.only(bottom: 65),
               ),
@@ -107,7 +107,7 @@ class LayoutFormulario extends StatelessWidget {
           suffixIcon: Icon(FontAwesomeIcons.clock),
         ),
         keyboardType: TextInputType.text,
-        validator: (str) => (model.controllerDataInicial!.text == '')
+        validator: (str) => (model.controllerDataInicial.text == '')
             ? "O evento deve ter uma data inicial."
             : null,
         onTap: () {
@@ -119,11 +119,11 @@ class LayoutFormulario extends StatelessWidget {
             model.dataInicial = date;
 
             model.dataFinal = model.minDate;
-            model.controllerDataInicial!.text =
+            model.controllerDataInicial.text =
                 new DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(date);
-            model.controllerDataFinal!.text =
+            model.controllerDataFinal.text =
                 DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR")
-                    .format(model.minDate!);
+                    .format(model.minDate);
           }, currentTime: DateTime.now(), locale: LocaleType.pt);
           model.refresh();
         },
@@ -144,7 +144,7 @@ class LayoutFormulario extends StatelessWidget {
           labelText: 'Termina',
           suffixIcon: Icon(FontAwesomeIcons.clock),
         ),
-        validator: (str) => (model.controllerDataFinal!.text == '')
+        validator: (str) => (model.controllerDataFinal.text == '')
             ? "O evento deve ter uma data final."
             : null,
         keyboardType: TextInputType.text,
@@ -156,7 +156,7 @@ class LayoutFormulario extends StatelessWidget {
             var time =
                 new DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(date);
             model.dataFinal = date;
-            model.controllerDataFinal!.text = time;
+            model.controllerDataFinal.text = time;
           }, currentTime: model.dataFinal, locale: LocaleType.pt);
           model.refresh();
         },
@@ -185,7 +185,7 @@ class LayoutFormulario extends StatelessWidget {
         ),
         maxLines: null,
         keyboardType: TextInputType.multiline,
-        validator: (str) => (str!.length < 2)
+        validator: (str) => (str.length < 2)
             ? "O título deve ter pelo menos 2 caracteres."
             : null,
       );

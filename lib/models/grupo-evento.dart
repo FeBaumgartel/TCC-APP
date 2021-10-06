@@ -4,11 +4,11 @@ import 'package:tcc_app/models/evento.dart';
 import 'package:tcc_app/models/grupo.dart';
 
 class GrupoEvento {
-  int? id;
-  int? idGrupo;
-  Grupo? grupo;
-  int? idEvento;
-  Evento? evento;
+  int id;
+  int idGrupo;
+  Grupo grupo;
+  int idEvento;
+  Evento evento;
   String nome = '';
 
   GrupoEvento({

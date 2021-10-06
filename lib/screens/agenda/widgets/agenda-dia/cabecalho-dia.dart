@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class CabecalhoDia extends StatelessWidget {
   final DateTime day;
-  const CabecalhoDia(this.day, {Key? key}) : super(key: key);
+  const CabecalhoDia(this.day, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -11,37 +11,38 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
 
 class AgendaMesProvider extends ChangeNotifier {
-  BuildContext? context;
-  AnimationController? _animationController; 
-  CalendarController? _calendarController;
+  BuildContext context;
+  AnimationController _animationController; 
+  CalendarController _calendarController;
   final EventosService _eventosService = new EventosService();
   DateTime _dia = DateTime.now();
-  String? _data;
-  String? _mes;
+  String _data;
+  String _mes;
   DateTime _selectedDay = DateTime.now();
-  int? _verificador;
-  List<int> _tiposFiltro = []; //variavel do filtro tipo
-  List<int> _usersFiltro = []; //variavel do filtro users
+  int _verificador;
+  List<int> _tiposFiltro = List<int>(); //variavel do filtro tipo
+  List<int> _usersFiltro = List<int>(); //variavel do filtro users
 
   AgendaMesProvider(this.context, this._animationController) {
     initializeDateFormatting();
+    _calendarController = CalendarController();
     _onVisibleDaysChanged(_dia, _dia, CalendarFormat.month);
-    _animationController!.forward();
+    _animationController.forward();
     _onVisibleDaysChanged(_dia, _dia, CalendarFormat.month);
     _selectedDay = DateTime.now();
     _verificador = 1;
-    _tiposFiltro = [];
-    _usersFiltro = [];
+    _tiposFiltro = List<int>();
+    _usersFiltro = List<int>();
   }
 
   build() {
     return this
         ._eventosService
-        .getEventsMonth(_mes!, _tiposFiltro, _usersFiltro);
+        .getEventsMonth(_mes, _tiposFiltro, _usersFiltro);
   }
 
   goToToday() {
-    _calendarController!.setSelectedDay(
+    _calendarController.setSelectedDay(
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
       runCallback: true,
     );
@@ -54,7 +55,7 @@ class AgendaMesProvider extends ChangeNotifier {
 
   void _onDaySelected(DateTime day, List events) {
     _data = day.toString();
-    final temp = _data!.split(" ");
+    final temp = _data.split(" ");
     _data = temp[0];
     _selectedDay = day;
     notifyListeners();
@@ -63,23 +64,23 @@ class AgendaMesProvider extends ChangeNotifier {
   void _onVisibleDaysChanged(
       DateTime first, DateTime last, CalendarFormat format) {
     if (_verificador == 1) {
-      int m = (_calendarController!.focusedDay).month;
+      int m = (_calendarController.focusedDay).month;
       if (m < 10) {
         _mes = "0" +
-            ((_calendarController!.focusedDay).month).toString() +
+            ((_calendarController.focusedDay).month).toString() +
             "/" +
-            ((_calendarController!.focusedDay).year).toString();
+            ((_calendarController.focusedDay).year).toString();
       } else
-        _mes = ((_calendarController!.focusedDay).month).toString() +
+        _mes = ((_calendarController.focusedDay).month).toString() +
             "/" +
-            ((_calendarController!.focusedDay).year).toString();
+            ((_calendarController.focusedDay).year).toString();
     } else
       _mes = (DateTime.now().toString().split(' ')[0].split('-')[1]) +
           "/" +
           DateTime.now().year.toString();
     _data = (_dia.toString()).split(" ")[0];
     notifyListeners();
-    _animationController!.fling();
+    _animationController.fling();
   }
 
   Widget buildTableCalendarWithBuilders(Map<DateTime, List<Evento>> _events) {
@@ -114,13 +115,13 @@ class AgendaMesProvider extends ChangeNotifier {
       ),
       builders: CalendarBuilders(
         selectedDayBuilder: (context, date, _) {
-          return DiaSelecionado(_animationController!, date, _calendarController!);
+          return DiaSelecionado(_animationController, date, _calendarController);
         },
         todayDayBuilder: (context, date, _) {
           return DiaAtual(date);
         },
         markersBuilder: (context, date, events, holidays) {
-          double? right;
+          double right;
           if (MediaQuery.of(context).size.width > 380 &&
               MediaQuery.of(context).size.width < 1000)
             right = 24;
@@ -132,7 +133,7 @@ class AgendaMesProvider extends ChangeNotifier {
               Positioned(
                 right: right,
                 bottom: 2,
-                child: MarcadorEventos(_calendarController!, date, _events[date]!),
+                child: MarcadorEventos(_calendarController, date, _events[date]),
               ),
             );
           }
@@ -158,14 +159,14 @@ class AgendaMesProvider extends ChangeNotifier {
     }
   }
 
-  events(List<Evento>? eventos) {
+  events(List<Evento> eventos) {
     Map<DateTime, List<Evento>> _events = Map<DateTime, List<Evento>>();
-    for (Evento e in eventos!) {
-      DateTime data = DateTime.parse(e.data!);
+    for (Evento e in eventos) {
+      DateTime data = DateTime.parse(e.data);
       if (!(_events.containsKey(data))) {
-        _events[data] = [];
+        _events[data] = List<Evento>();
       }
-      _events[data]!.add(e);
+      _events[data].add(e);
     }
     return _events;
   }
@@ -173,7 +174,7 @@ class AgendaMesProvider extends ChangeNotifier {
   cadastrarEvento() {
     Evento _evento = Evento();
     Navigator.push(
-      context!,
+      context,
       MaterialPageRoute(
           builder: (context) => CadastrarEditarEvento(eventoParam: _evento, atendimento: false,)),
     ).then((value) => notifyListeners());

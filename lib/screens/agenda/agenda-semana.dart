@@ -37,7 +37,7 @@ class AgendaSemana extends StatelessWidget {
 }
 
 class ScrollWidget extends StatelessWidget {
-  const ScrollWidget({Key? key}) : super(key: key);
+  const ScrollWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,6 @@ class ScrollWidget extends StatelessWidget {
           direction: model.settings.multiDirection
               ? InfiniteListDirection.single
               : InfiniteListDirection.multi,
-          minChildCount: model.settings.minCount,
-          maxChildCount: model.settings.maxCount,
           builder: (context, index) {
             DateTime _day0;
             DateTime _day1;

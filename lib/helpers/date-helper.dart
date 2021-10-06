@@ -49,7 +49,7 @@ class DateHelper {
   }
 
   /* Formata data para inserir na db sqlite */
-  static String? toDbString(DateTime date) {
+  static String toDbString(DateTime date) {
     
     if (date == null) {
       return null;
@@ -60,7 +60,7 @@ class DateHelper {
   }
 
   /* Retorna obj DateTime a partir de uma string com formato padrao do banco (2020-05-29) */
-  static DateTime? fromDbString(String inputString) {
+  static DateTime fromDbString(String inputString) {
 
     if (inputString == null || inputString.trim().isEmpty) {
       return null;
@@ -70,7 +70,7 @@ class DateHelper {
   }
 
   // Formato padrão de data BR (29-05-2020)
-  static String? formatAsDate(DateTime date) {
+  static String formatAsDate(DateTime date) {
 
     if (date == null) {
       return null;
@@ -81,7 +81,7 @@ class DateHelper {
   }
 
   /* Formato padrão de data BR (29-05-2020) */
-  static DateTime? fromFormatedString(String inputString) {
+  static DateTime fromFormatedString(String inputString) {
 
     if (inputString == null || inputString.trim().isEmpty) {
       return null;

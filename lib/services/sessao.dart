@@ -8,21 +8,21 @@ import 'package:rxdart/rxdart.dart';
 import 'package:tcc_app/services/database.dart';
 
 class Sessao {
-  static Sessao? sessao;
+  static Sessao sessao;
   final FlutterSecureStorage _storage = new FlutterSecureStorage();
   //ignore: close_sinks
   final BehaviorSubject<Usuario> usuario = new BehaviorSubject<Usuario>();
-  String? storageKey;
+  String storageKey;
 
   Sessao._() {
-    this.getUsuario().then((Usuario? usuario) {
+    this.getUsuario().then((Usuario usuario) {
       if (usuario != null) {
         this.setUsuario(usuario);
       }
     });
   }
 
-  static Sessao? create() {
+  static Sessao create() {
     if (sessao == null) {
       sessao = new Sessao._();
     }
@@ -30,7 +30,7 @@ class Sessao {
     return sessao;
   }
 
-  Future<void> setUsuario(Usuario? usuario) async {
+  Future<void> setUsuario(Usuario usuario) async {
     if (usuario != null) {
       this.usuario.add(usuario);
       this.storageKey = 'multiplier.${usuario.id}';

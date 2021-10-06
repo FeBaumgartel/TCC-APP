@@ -28,29 +28,18 @@ class EventosService extends RepositorioSimples {
 
   Future<void> excluirEventos(id, bool excluirTodos, bool forceDelete) async {
     String queryDelete = 'DELETE FROM eventos WHERE ';
-    String queryUpdate =
-        'UPDATE eventos SET deleted_at = CURRENT_TIMESTAMP, sinc_status = 0 WHERE ';
-    String where =
-        (excluirTodos == true) ? 'codigo_recorrencia = ?' : 'id = ?';
-    String query = ((forceDelete == true) ? queryDelete : queryUpdate) + where;
-
-    if (forceDelete == true) {
-      await _database.db.rawQuery(
-          'DELETE FROM evento_envolvidos WHERE id_evento IN (SELECT id FROM eventos WHERE ' +
-              where +
-              ')',
-          [id]);
-    } else {
-      await _database.db.rawQuery(
-          'UPDATE evento_envolvidos SET deleted_at = CURRENT_TIMESTAMP WHERE id_evento IN (SELECT id FROM eventos WHERE ' +
-              where +
-              ')',
-          [id]);
-    }
+    String where = 'id = ?';
+    String query = queryDelete + where;
 
     await _database.db.rawQuery(query, [id]);
   }
 
+  List<Evento> eventosDia(DateTime data) {
+
+
+    return [];
+  }
+  
   Future<Evento> updateEventos(
     Evento evento) async {
 
@@ -61,11 +50,10 @@ class EventosService extends RepositorioSimples {
   }
 
   Future<List<Evento>> getEventsDate(String date, List<int> filtrosTipos,
-      List<int> filtrosUsers, String? pesquisa) async {
+      List<int> filtrosUsers, String pesquisa) async {
     String sql =
       '''
-        SELECT eventos.id, eventos.id, id_cliente, observacao_inicial, observacao_final, eventos.tipo, eventos.localizacao, titulo, strftime(\'%Y-%m-%d\', data_inicio) as data, data_fim, data_inicio, envolvidos,recorrente, codigo_recorrencia, tipo_recorrencia, quantidade_recorrencia, data_fim_recorrencia, tipo_visita, tipo_lembrete, clientes.nome_fantasia as cli_nome_fantasia
-        FROM eventos LEFT JOIN clientes ON clientes.id = eventos.id_cliente
+        SELECT eventos.id, nome, strftime(\'%Y-%m-%d\', data_inicio) as data, data_fim, data_inicio
         WHERE data = ?
       ''';
     if (filtrosTipos.isNotEmpty) {
@@ -187,7 +175,7 @@ class EventosService extends RepositorioSimples {
     return eventos;
   }
 
-  Future<Evento?> getEvento(int id) async {
+  Future<Evento> getEvento(int id) async {
     String sql =
       '''
         SELECT eventos.id, eventos.id, id_cliente, id_usuario, observacao_inicial, observacao_final, eventos.tipo, eventos.localizacao, titulo, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio, envolvidos, recorrente, codigo_recorrencia, tipo_recorrencia, quantidade_recorrencia, data_fim_recorrencia, tipo_visita, tipo_lembrete, clientes.nome_fantasia as cli_nome_fantasia
@@ -240,9 +228,9 @@ class EventosService extends RepositorioSimples {
   Future<Map<String, dynamic>> toMapSincronizacao(EventoDatabase evento) async {
     Set<String> campos = Evento().toMap().keys.toSet();
 
-    Map<String, dynamic> newObj = {...evento.dados!};
+    Map<String, dynamic> newObj = {...evento.dados};
 
-    evento.dados!.keys.forEach((key) {
+    evento.dados.keys.forEach((key) {
       if (!campos.contains(key)) {
         newObj.remove(key);
       }

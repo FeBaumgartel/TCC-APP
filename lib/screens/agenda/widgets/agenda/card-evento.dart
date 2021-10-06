@@ -11,7 +11,7 @@ class CardEvento extends StatelessWidget {
   final Settings settings;
   final String hora;
   const CardEvento(this.index, this.eventos, this.settings, this.hora,
-      {Key? key})
+      {Key key})
       : super(key: key);
 
   @override

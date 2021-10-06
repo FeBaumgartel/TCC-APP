@@ -15,9 +15,9 @@ class MenuAgenda extends StatefulWidget {
 }
 
 class CustomPopupMenu {
-  int? value;
-  String? title;
-  IconData? icon;
+  int value;
+  String title;
+  IconData icon;
   CustomPopupMenu({this.title, this.value, this.icon});
 }
 
@@ -30,19 +30,19 @@ List<CustomPopupMenu> choices = <CustomPopupMenu>[
 ];
 
 class _MenuAgenaState extends State<MenuAgenda> {
-  CustomPopupMenu? _selectedChoices;
+  CustomPopupMenu _selectedChoices;
 
   void _select(CustomPopupMenu choice) {
     setState(() {
       _selectedChoices = choice;
     });
-    if (_selectedChoices!.value == 1) {
+    if (_selectedChoices.value == 1) {
       _routeVerifier(Agenda());
-    } else if (_selectedChoices!.value == 2) {
+    } else if (_selectedChoices.value == 2) {
       _routeVerifier(AgendaMes());
-    } else if (_selectedChoices!.value == 3) {
+    } else if (_selectedChoices.value == 3) {
       _routeVerifier(AgendaSemana());
-    } else if (_selectedChoices!.value == 4) {
+    } else if (_selectedChoices.value == 4) {
       _routeVerifier(AgendaDia());
     }
   }
@@ -62,7 +62,7 @@ class _MenuAgenaState extends State<MenuAgenda> {
                 children: <Widget>[
                   Icon(choice.icon, color: Colors.grey, size: 19),
                   Text(
-                    "  " + choice.title!,
+                    "  " + choice.title,
                     //style: TextStyle(color: Colors.white, fontSize: 30),
                   )
                 ]),
@@ -73,12 +73,12 @@ class _MenuAgenaState extends State<MenuAgenda> {
   }
 
   _routeVerifier(Widget route) {
-    if (widget.paginaAtual == 'Mês' && _selectedChoices!.value != 2) {
+    if (widget.paginaAtual == 'Mês' && _selectedChoices.value != 2) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => route),
       );
-    } else if (_selectedChoices!.value == 2) {
+    } else if (_selectedChoices.value == 2) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => route),

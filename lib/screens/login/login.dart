@@ -13,7 +13,7 @@ class Login extends StatelessWidget {
 
 class LoginPage extends StatefulWidget {
   final BuildContext context;
-  LoginPage({Key? key, required this.context}) : super(key: key);
+  LoginPage({Key key, this.context}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -22,7 +22,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
-  late ThemeNotifier themeNotifier;
+  ThemeNotifier themeNotifier;
 
   dynamic _arguments;
 
@@ -30,14 +30,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   TextEditingController _senha = new TextEditingController();
   final UsuariosService usuariosService = new UsuariosService();
 
-  late Animation<double> _formAnimation;
-  late AnimationController _formAnimationController;
-  late Animation<double> _degradeAnimation;
-  late AnimationController _degradeAnimationController;
-  late Animation<num> _logoAnimation;
-  late AnimationController _logoAnimationController;
-  late Animation<num> _formOpacityAnimation;
-  late AnimationController _formOpacityAnimationController;
+  Animation<double> _formAnimation;
+  AnimationController _formAnimationController;
+  Animation<double> _degradeAnimation;
+  AnimationController _degradeAnimationController;
+  Animation<num> _logoAnimation;
+  AnimationController _logoAnimationController;
+  Animation<num> _formOpacityAnimation;
+  AnimationController _formOpacityAnimationController;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
     setState(() {
       themeNotifier = Provider.of<ThemeNotifier>(widget.context);
-      _arguments = ModalRoute.of(widget.context)!.settings.arguments;
+      _arguments = ModalRoute.of(widget.context).settings.arguments;
 
       _degradeAnimation =
           Tween(begin: 1.0, end: 0.5).animate(_degradeAnimationController)
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         });
   }
 
-  late ScaffoldFeatureController _scafoldController;
+  ScaffoldFeatureController _scafoldController;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         padding: const EdgeInsets.all(30),
                         child: Image.asset('assets/images/logo.png'),
                       ),
-                      builder: (BuildContext context, Widget? child) {
+                      builder: (BuildContext context, Widget child) {
                         return Container(
                           height: double.parse(_logoAnimation.value.toString()),
                           child: child,
@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                       controller: _email,
                                       keyboardType: TextInputType.emailAddress,
                                       validator: (value) {
-                                        if (value!.isEmpty) {
+                                        if (value.isEmpty) {
                                           return 'Digite o e-mail';
                                         }
                                         return null;
@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                       keyboardType: TextInputType.emailAddress,
                                       obscureText: true,
                                       validator: (value) {
-                                        if (value!.isEmpty) {
+                                        if (value.isEmpty) {
                                           return 'Digite a senha';
                                         }
                                         return null;
@@ -219,7 +219,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      builder: (BuildContext context, Widget? child) {
+                      builder: (BuildContext context, Widget child) {
                         return Opacity(
                           opacity: double.parse(
                               _formOpacityAnimation.value.toString()),

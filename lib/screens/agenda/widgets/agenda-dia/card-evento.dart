@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class CardEvento extends StatelessWidget {
   final Evento event;
-  const CardEvento(this.event, {Key? key}) : super(key: key);
+  const CardEvento(this.event, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

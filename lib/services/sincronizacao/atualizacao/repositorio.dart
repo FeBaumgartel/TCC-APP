@@ -3,7 +3,7 @@ import 'package:tcc_app/services/sincronizacao/atualizacao/evento-database.dart'
 import 'package:sqflite/sql.dart';
 
 abstract class Mapeavel {
-  Future<Map<String, dynamic>?> toMapSincronizacao(EventoDatabase ev);
+  Future<Map<String, dynamic>> toMapSincronizacao(EventoDatabase ev);
 }
 
 abstract class RepositorioSincronizacao implements Mapeavel {
@@ -59,7 +59,7 @@ abstract class RepositorioSimples implements RepositorioSincronizacao {
 abstract class RepositorioTabelaPivot implements RepositorioSincronizacao {
   
   @override
-  Future<Map<String, dynamic>?> toMapSincronizacao(EventoDatabase ev) async {
+  Future<Map<String, dynamic>> toMapSincronizacao(EventoDatabase ev) async {
     return ev.dados;
   }
 

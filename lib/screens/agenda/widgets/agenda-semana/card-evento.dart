@@ -5,9 +5,9 @@ import 'package:tcc_app/screens/agenda/cadastrar-editar/cadastrar-editar.dart';
 import 'package:provider/provider.dart';
 
 class CardEvento extends StatelessWidget {
-  final Evento? event;
+  final Evento event;
 
-  const CardEvento({Key? key, @required this.event}) : super(key: key);
+  const CardEvento({Key key, @required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CardEvento extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          CadastrarEditarEvento(eventoParam: event!)))
+                          CadastrarEditarEvento(eventoParam: event)))
               .then((value) => model.refresh());
         },
         child: Container(
@@ -27,7 +27,7 @@ class CardEvento extends StatelessWidget {
               ? EdgeInsets.all(0.3)
               : EdgeInsets.all(0.5),
           color: Color(0xFF825EE4).withOpacity(0.16),
-          child: Text("${event!.nome}", style: TextStyle(color: Colors.white)),
+          child: Text("${event.nome}", style: TextStyle(color: Colors.white)),
         ),
       );
     });

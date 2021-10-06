@@ -4,8 +4,8 @@ import 'package:sqflite/sqflite.dart' as Sqlite;
 import 'package:path/path.dart';
 
 class Database {
-  static Database? database;
-  late Sqlite.Database db;
+  static Database database;
+  Sqlite.Database db;
   Map<String, Sqlite.Database> databases = new Map();
   //ignore: close_sinks
   BehaviorSubject<bool> dbPronto = BehaviorSubject<bool>.seeded(false);
@@ -15,7 +15,7 @@ class Database {
       database = new Database();
     }
 
-    return database!;
+    return database;
   }
 
   Database() {

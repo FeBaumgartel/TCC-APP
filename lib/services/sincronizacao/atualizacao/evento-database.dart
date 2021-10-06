@@ -1,8 +1,8 @@
 class EventoDatabase {
-  String? tabela;
-  String? acao;
-  int? idRegistro;
-  Map<String, dynamic>? dados;
+  String tabela;
+  String acao;
+  int idRegistro;
+  Map<String, dynamic> dados;
 
   EventoDatabase({
     this.tabela,
@@ -20,7 +20,7 @@ class EventoDatabase {
     };
   }
 
-  static EventoDatabase? fromMap(Map<String, dynamic>? map) {
+  static EventoDatabase fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return EventoDatabase(

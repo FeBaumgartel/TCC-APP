@@ -22,7 +22,7 @@ class ComponenteSemana extends StatelessWidget {
     this.tiposFiltro,
     this.usersFiltro,
     this.getEventsOfDay, {
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override
@@ -116,13 +116,13 @@ class ComponenteSemana extends StatelessWidget {
     return CabecalhoSemana(day: day);
   }
 
-  _gerenciaEventos(Iterable<Evento>? _eventosConsulta) {
+  _gerenciaEventos(Iterable<Evento> _eventosConsulta) {
     List<Evento> _tempEvents = [];
 
     if (events.isEmpty) {
-      events.addAll(_eventosConsulta!);
+      events.addAll(_eventosConsulta);
     } else {
-      _eventosConsulta!.forEach((_event) {
+      _eventosConsulta.forEach((_event) {
         if (!_containsEvent(events, _event)) _tempEvents.add(_event);
       });
       events.addAll(_tempEvents);

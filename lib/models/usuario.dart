@@ -3,11 +3,11 @@ import 'package:tcc_app/models/grupo.dart';
 enum RelacionamentosUsuario { grupo }
 
 class Usuario {
-  int? id;
-  String? nome;
-  String? email;
-  String? senha;
-  int? id_grupo;
+  int id;
+  String nome;
+  String email;
+  String senha;
+  int id_grupo;
 
   Usuario({
     this.id,

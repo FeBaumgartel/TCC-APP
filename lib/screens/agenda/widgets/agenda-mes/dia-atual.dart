@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DiaAtual extends StatelessWidget {
   final DateTime date;
-  const DiaAtual(this.date, {Key? key}) : super(key: key);
+  const DiaAtual(this.date, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

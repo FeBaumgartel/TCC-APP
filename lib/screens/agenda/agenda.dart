@@ -32,7 +32,7 @@ class Agenda extends StatelessWidget {
                       child:
                           Text('Hoje', style: TextStyle(color: Colors.white)),
                       onPressed: () {
-                        model.scrollController!.jumpTo(0);
+                        model.scrollController.jumpTo(0);
                       },
                     ),
                     MenuAgenda('Agenda')
@@ -50,7 +50,7 @@ class Agenda extends StatelessWidget {
 }
 
 class ScrollWidget extends StatelessWidget {
-  const ScrollWidget({Key? key}) : super(key: key);
+  const ScrollWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,6 @@ class ScrollWidget extends StatelessWidget {
         direction: model.settings.multiDirection
             ? InfiniteListDirection.multi
             : InfiniteListDirection.single,
-        minChildCount: model.settings.minCount,
-        maxChildCount: model.settings.maxCount,
         builder: (context, index) {
           final date = DateTime.now().add(Duration(
             days: index,
@@ -74,7 +72,6 @@ class ScrollWidget extends StatelessWidget {
           var temp = data.split(' ');
           data = temp[0];
           return InfiniteListItem(
-            headerAlignment: model.settings.alignment,
             headerStateBuilder: (context, state) => Container(
               height: 70,
               width: 70,
@@ -109,7 +106,7 @@ class ScrollWidget extends StatelessWidget {
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Evento>> snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data!.length > 0) {
+                    if (snapshot.data.length > 0) {
                       return Column(
                         children: model.buildEvents(snapshot.data, context),
                       );

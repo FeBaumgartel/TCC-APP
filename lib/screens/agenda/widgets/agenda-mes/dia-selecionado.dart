@@ -7,7 +7,7 @@ class DiaSelecionado extends StatelessWidget {
   final CalendarController calendarController;
   const DiaSelecionado(
       this.animationController, this.date, this.calendarController,
-      {Key? key})
+      {Key key})
       : super(key: key);
 
   @override

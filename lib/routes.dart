@@ -34,8 +34,8 @@ class Routes {
 class TccApp extends StatelessWidget {
 
   const TccApp({
-    Key? key,
-    required this.routes,
+    Key key,
+    this.routes,
   }) : super(key: key);
 
   final Map<String, Widget Function(BuildContext)> routes;

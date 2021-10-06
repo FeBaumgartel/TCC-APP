@@ -8,12 +8,12 @@ class MarcadorEventos extends StatelessWidget {
   final DateTime date;
   final List<Evento> events;
   const MarcadorEventos(this.calendarController, this.date, this.events,
-      {Key? key})
+      {Key key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int? numEvents = events.length > 0 ? events.length : null;
+    int numEvents = events.length > 0 ? events.length : null;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: calendarController.isSelected(date) ||

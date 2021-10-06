@@ -14,7 +14,7 @@ class AgendaMes extends StatelessWidget {
 }
 
 class AgendaMesPage extends StatefulWidget {
-  AgendaMesPage({Key? key}) : super(key: key);
+  AgendaMesPage({Key key}) : super(key: key);
 
   @override
   _AgendaMesPageState createState() => _AgendaMesPageState();
@@ -22,7 +22,7 @@ class AgendaMesPage extends StatefulWidget {
 
 class _AgendaMesPageState extends State<AgendaMesPage>
     with TickerProviderStateMixin {
-  AnimationController? _animationController;
+  AnimationController _animationController;
 
   @override
   void initState() {

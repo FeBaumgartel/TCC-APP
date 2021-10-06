@@ -5,26 +5,26 @@ import 'package:tcc_app/helpers/debouncer.dart';
 
 // ignore: must_be_immutable
 class AppBarComponent extends StatelessWidget {
-  List<Widget>? actions = [];
-  final PreferredSizeWidget? bottom;
-  Widget? flexibleSpace;
-  final Widget? title;
-  final Function(String)? onChange;
-  final Function? onClose;
-  Duration? delayChange;
+  List<Widget> actions = [];
+  final PreferredSizeWidget bottom;
+  Widget flexibleSpace;
+  final Widget title;
+  final Function(String) onChange;
+  final Function onClose;
+  Duration delayChange;
 
   AppBarComponent({
     @required this.title,
-    List<Widget>? actions,
+    List<Widget> actions,
     this.bottom,
     @required this.onChange,
     @required this.onClose,
-    Duration? delayChange,
+    Duration delayChange,
   }) {
     if (delayChange == null) this.delayChange = Duration(milliseconds: 300);
 
     if (actions != null) {
-      this.actions!.addAll(actions);
+      this.actions.addAll(actions);
     }
   }
 
@@ -41,12 +41,12 @@ class AppBarComponent extends StatelessWidget {
 
 // ignore: must_be_immutable
 class AppBarComponentState extends StatefulWidget {
-  final List<Widget>? actions;
-  final PreferredSizeWidget? bottom;
-  final Widget? title;
-  final Function(String)? onChange;
-  final Function? onClose;
-  final Duration? delayChange;
+  final List<Widget> actions;
+  final PreferredSizeWidget bottom;
+  final Widget title;
+  final Function(String) onChange;
+  final Function onClose;
+  final Duration delayChange;
 
   AppBarComponentState({
     @required this.title,
@@ -69,18 +69,18 @@ class AppBarComponentState extends StatefulWidget {
 }
 
 class _AppBarComponentState extends State<AppBarComponentState> {
-  List<Widget>? actions;
-  final PreferredSizeWidget? bottom;
-  Widget? flexibleSpace;
-  final Widget? title;
-  final Function(String)? onChange;
-  final Function? onClose;
-  final Duration? delayChange;
+  List<Widget> actions;
+  final PreferredSizeWidget bottom;
+  Widget flexibleSpace;
+  final Widget title;
+  final Function(String) onChange;
+  final Function onClose;
+  final Duration delayChange;
 
-  Debouncer? debouncer;
+  Debouncer debouncer;
   bool open = false;
-  Widget? icon;
-  bool? init;
+  Widget icon;
+  bool init;
 
   void _setSearchBar() {
     Widget element = IconButton(
@@ -89,15 +89,15 @@ class _AppBarComponentState extends State<AppBarComponentState> {
         : Icon(FontAwesomeIcons.search),
       onPressed: () {
         setState(() {
-          if (open) onClose!();
+          if (open) onClose();
           open = !open;
         });
       },
     );
-    if (init!)
-      this.actions!.insert(0, element);
+    if (init)
+      this.actions.insert(0, element);
     else
-      this.actions![0] = element;
+      this.actions[0] = element;
     init = false;
   }
 
@@ -112,7 +112,7 @@ class _AppBarComponentState extends State<AppBarComponentState> {
     if (actions != null) this.actions = actions;
     init = true;
 
-    debouncer = Debouncer(delayChange!);
+    debouncer = Debouncer(delayChange);
 
     flexibleSpace = FlexibleSpaceBar.createSettings(
       currentExtent: 1,
@@ -122,7 +122,7 @@ class _AppBarComponentState extends State<AppBarComponentState> {
           style: TextStyle(
             color: Colors.white,
           ),
-          onChanged: (value) => debouncer!.run(() => onChange!(value)),
+          onChanged: (value) => debouncer.run(() => onChange(value)),
           decoration: InputDecoration(
             border: UnderlineInputBorder(
               borderSide: BorderSide(

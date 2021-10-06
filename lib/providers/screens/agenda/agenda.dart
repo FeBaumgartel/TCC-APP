@@ -9,11 +9,11 @@ import 'package:intl/date_symbol_data_local.dart';
 class AgendaProvider extends ChangeNotifier {
   final BuildContext context;
   final EventosService _eventosService = new EventosService();
-  ScrollController? scrollController;
+  ScrollController scrollController;
   Settings settings = Settings();
   List<int> _tiposFiltro = []; //variavel do filtro tipo
   List<int> _usersFiltro = []; //variavel do filtro users
-  String? _pesquisa;
+  String _pesquisa;
 
   AgendaProvider(this.context) {
     initializeDateFormatting("pt_BR");
@@ -25,7 +25,7 @@ class AgendaProvider extends ChangeNotifier {
 
   refresh() => notifyListeners();
 
-  pesquisar(String? pesquisado) async {
+  pesquisar(String pesquisado) async {
     _pesquisa = pesquisado;
     notifyListeners();
   }
@@ -36,11 +36,11 @@ class AgendaProvider extends ChangeNotifier {
         data, _tiposFiltro, _usersFiltro, _pesquisa);
   }
 
-  List<Widget> buildEvents(List<Evento>? eventos, BuildContext context) {
+  List<Widget> buildEvents(List<Evento> eventos, BuildContext context) {
     List<Widget> evs = [];
-    for (var i = 0; i < eventos!.length; i++) {
+    for (var i = 0; i < eventos.length; i++) {
       //Evento event = eventos[i];
-      var temp = eventos[i].dataInicio!.split(" ");
+      var temp = eventos[i].dataInicio.split(" ");
       var hora = temp[1];
       temp = hora.split(":");
       hora = temp[0] + ":" + temp[1];

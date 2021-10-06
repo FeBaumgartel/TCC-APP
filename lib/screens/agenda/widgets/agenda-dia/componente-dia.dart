@@ -15,7 +15,7 @@ class ComponenteDia extends StatelessWidget {
 
   const ComponenteDia(this.events, this.date, this.eventosService, this.datas,
       this.tiposFiltro, this.usersFiltro, this.getEventsOfDay,
-      {Key? key})
+      {Key key})
       : super(key: key);
 
   @override
@@ -35,8 +35,8 @@ class ComponenteDia extends StatelessWidget {
                 future: eventosService.getEventsWeek(
                     datas, tiposFiltro, usersFiltro),
                 builder:
-                    (BuildContext context, AsyncSnapshot<List<Evento>>? snap) {
-                  if (snap!.hasData) {
+                    (BuildContext context, AsyncSnapshot<List<Evento>> snap) {
+                  if (snap.hasData) {
                     if (snap.data != null) {
                       _gerenciaEventos(snap.data);
                       return DayViewSchedule(
@@ -94,13 +94,13 @@ class ComponenteDia extends StatelessWidget {
     return CabecalhoDia(day);
   }
 
-  _gerenciaEventos(List<Evento>? _eventosConsulta) {
+  _gerenciaEventos(List<Evento> _eventosConsulta) {
     List<Evento> _tempEvents = [];
 
     if (events.isEmpty) {
-      events.addAll(_eventosConsulta!);
+      events.addAll(_eventosConsulta);
     } else {
-      _eventosConsulta!.forEach((_event) {
+      _eventosConsulta.forEach((_event) {
         if (!_containsEvent(events, _event)) _tempEvents.add(_event);
       });
       events.addAll(_tempEvents);

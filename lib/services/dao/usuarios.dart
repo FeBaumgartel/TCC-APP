@@ -42,7 +42,7 @@ class UsuariosService extends RepositorioSimples {
     return usuarios;
   }
 
-  Future<Usuario?> getUsuarioById(int id) async {
+  Future<Usuario> getUsuarioById(int id) async {
     List<Map> maps = await _database.db.query(
       _tabela,
       where: 'id = ?',
@@ -76,9 +76,9 @@ class UsuariosService extends RepositorioSimples {
       'id_grupo_permissao',
     };
 
-    Map<String, dynamic> newObj = {...evento.dados!};
+    Map<String, dynamic> newObj = {...evento.dados};
 
-    evento.dados!.keys.forEach((key) {
+    evento.dados.keys.forEach((key) {
       if (!campos.contains(key)) {
         newObj.remove(key);
       }

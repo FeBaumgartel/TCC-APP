@@ -1,10 +1,10 @@
 
 class Evento {
-  int? id;
-  String? nome;
-  String? dataInicio;
-  String? dataFinal;
-  String? data;
+  int id;
+  String nome;
+  String dataInicio;
+  String dataFinal;
+  String data;
 
   Evento({
     this.id,

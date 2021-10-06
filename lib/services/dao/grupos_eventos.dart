@@ -44,9 +44,9 @@ class GruposEventosService extends RepositorioSimples {
       'imagem_local',
     };
 
-    Map<String, dynamic> newObj = {...evento.dados!};
+    Map<String, dynamic> newObj = {...evento.dados};
 
-    evento.dados!.keys.forEach((key) {
+    evento.dados.keys.forEach((key) {
       if (!campos.contains(key)) {
         newObj.remove(key);
       }

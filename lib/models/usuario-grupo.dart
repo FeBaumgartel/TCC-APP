@@ -2,11 +2,11 @@ import 'package:tcc_app/models/evento.dart';
 import 'package:tcc_app/models/grupo.dart';
 
 class UsuarioGrupo {
-  int? id;
-  int? idGrupo;
-  Grupo? grupo;
-  int? idEvento;
-  Evento? evento;
+  int id;
+  int idGrupo;
+  Grupo grupo;
+  int idEvento;
+  Evento evento;
 
 
   UsuarioGrupo({

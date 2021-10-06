@@ -6,12 +6,12 @@ import 'package:tcc_app/screens/agenda/cadastrar-editar/cadastrar-editar.dart';
 class ListaEventos extends StatelessWidget {
   final Map<DateTime, List<Evento>> eventos;
   final DateTime selectedDay;
-  const ListaEventos(this.eventos, this.selectedDay, {Key? key}) : super(key: key);
+  const ListaEventos(this.eventos, this.selectedDay, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-        children: eventos[selectedDay]!
+        children: eventos[selectedDay]
             .map((eventos) => Container(
                 decoration: BoxDecoration(
                   color: Color(0xFF825EE4).withOpacity(0.16),
@@ -22,11 +22,11 @@ class ListaEventos extends StatelessWidget {
                 child: Theme(
                   data: ThemeData(splashColor: Colors.white),
                   child: ListTile(
-                      title: Text(eventos.nome!,
+                      title: Text(eventos.nome,
                           style: TextStyle(color: Colors.white)),
                       subtitle: Text(
                           DateFormat('dd/MM  HH:mm', 'pt_BR')
-                              .format(DateTime.parse(eventos.data!)),
+                              .format(DateTime.parse(eventos.data)),
                           style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.push(

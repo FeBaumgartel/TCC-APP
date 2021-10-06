@@ -1,8 +1,8 @@
 
 class Hino {
-  int? id;
-  String? nome;
-  String? letra;
+  int id;
+  String nome;
+  String letra;
 
   Hino({
     this.id,

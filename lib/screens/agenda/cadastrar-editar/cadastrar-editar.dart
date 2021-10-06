@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 
 class CadastrarEditarEvento extends StatelessWidget {
   CadastrarEditarEvento({this.eventoParam, this.atendimento});
-  final Evento? eventoParam;
-  final bool? atendimento;
+  final Evento eventoParam;
+  final bool atendimento;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CadastrarEditarProvider>(
-      create: (context) => CadastrarEditarProvider(context, eventoParam, atendimento!),
+      create: (context) => CadastrarEditarProvider(context, eventoParam, atendimento),
       child:
           Consumer<CadastrarEditarProvider>(builder: (context, model, widget) {
         return Scaffold(

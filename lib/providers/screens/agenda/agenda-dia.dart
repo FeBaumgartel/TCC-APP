@@ -32,21 +32,21 @@ class AgendaDiaProvider extends ChangeNotifier {
     List<StartDurationItem> _events = [];
     _evs = eventos(events);
     if (_evs[day] != null) {
-      _events = _evs[day]!
+      _events = _evs[day]
           .map(
             (event) => StartDurationItem(
-              startMinuteOfDay: (DateTime.parse(event.dataInicio!).hour * 60) +
-                  DateTime.parse(event.dataInicio!).minute,
-              duration: ((DateTime.parse(event.dataFinal!).hour * 60) +
-                          DateTime.parse(event.dataFinal!).minute -
-                          (DateTime.parse(event.dataInicio!).hour * 60) +
-                          DateTime.parse(event.dataInicio!).minute) <
+              startMinuteOfDay: (DateTime.parse(event.dataInicio).hour * 60) +
+                  DateTime.parse(event.dataInicio).minute,
+              duration: ((DateTime.parse(event.dataFinal).hour * 60) +
+                          DateTime.parse(event.dataFinal).minute -
+                          (DateTime.parse(event.dataInicio).hour * 60) +
+                          DateTime.parse(event.dataInicio).minute) <
                       0
                   ? 60
-                  : ((DateTime.parse(event.dataFinal!).hour * 60) +
-                      DateTime.parse(event.dataFinal!).minute -
-                      (DateTime.parse(event.dataInicio!).hour * 60) +
-                      DateTime.parse(event.dataInicio!).minute),
+                  : ((DateTime.parse(event.dataFinal).hour * 60) +
+                      DateTime.parse(event.dataFinal).minute -
+                      (DateTime.parse(event.dataInicio).hour * 60) +
+                      DateTime.parse(event.dataInicio).minute),
               builder: (context, itemPosition, itemSize) => _eventBuilder(
                 context,
                 itemPosition,
@@ -63,11 +63,11 @@ class AgendaDiaProvider extends ChangeNotifier {
   eventos(List<Evento> eventos) {
     Map<DateTime, List<Evento>> _events = Map<DateTime, List<Evento>>();
     for (Evento e in eventos) {
-      DateTime data = DateTime.parse(e.data!);
+      DateTime data = DateTime.parse(e.data);
       if (!(_events.containsKey(data))) {
         _events[data] = [];
       }
-      _events[data]!.add(e);
+      _events[data].add(e);
     }
     return _events;
   }
