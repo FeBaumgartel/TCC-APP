@@ -16,12 +16,9 @@ class AgendaMesProvider extends ChangeNotifier {
   CalendarController _calendarController;
   final EventosService _eventosService = new EventosService();
   DateTime _dia = DateTime.now();
-  String _data;
   String _mes;
   DateTime _selectedDay = DateTime.now();
   int _verificador;
-  List<int> _tiposFiltro = List<int>(); //variavel do filtro tipo
-  List<int> _usersFiltro = List<int>(); //variavel do filtro users
 
   AgendaMesProvider(this.context, this._animationController) {
     initializeDateFormatting();
@@ -31,14 +28,12 @@ class AgendaMesProvider extends ChangeNotifier {
     _onVisibleDaysChanged(_dia, _dia, CalendarFormat.month);
     _selectedDay = DateTime.now();
     _verificador = 1;
-    _tiposFiltro = List<int>();
-    _usersFiltro = List<int>();
   }
 
   build() {
     return this
         ._eventosService
-        .getEventsMonth(_mes, _tiposFiltro, _usersFiltro);
+        .getEventsMonth(_mes);
   }
 
   goToToday() {
@@ -50,14 +45,6 @@ class AgendaMesProvider extends ChangeNotifier {
     _mes = (DateTime.now().toString().split(' ')[0].split('-')[1]) +
         "/" +
         DateTime.now().year.toString();
-    notifyListeners();
-  }
-
-  void _onDaySelected(DateTime day, List events) {
-    _data = day.toString();
-    final temp = _data.split(" ");
-    _data = temp[0];
-    _selectedDay = day;
     notifyListeners();
   }
 
@@ -78,7 +65,6 @@ class AgendaMesProvider extends ChangeNotifier {
       _mes = (DateTime.now().toString().split(' ')[0].split('-')[1]) +
           "/" +
           DateTime.now().year.toString();
-    _data = (_dia.toString()).split(" ")[0];
     notifyListeners();
     _animationController.fling();
   }

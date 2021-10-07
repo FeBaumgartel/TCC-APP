@@ -1,13 +1,10 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:tcc_app/helpers/date-helper.dart';
 import 'package:tcc_app/models/evento.dart';
-import 'package:tcc_app/models/item-pesquisa.dart';
 import 'package:tcc_app/models/usuario.dart';
-import 'package:tcc_app/screens/agenda/cadastrar-editar/widgets/loading.dart';
 import 'package:tcc_app/services/dao/eventos.dart';
 import 'package:tcc_app/services/dao/grupos_eventos.dart';
 import 'package:tcc_app/services/sessao.dart';
@@ -15,7 +12,6 @@ import 'package:tcc_app/services/sessao.dart';
 class CadastrarEditarProvider extends ChangeNotifier {
   final BuildContext context;
   
-  final Sessao _sessao = Sessao.create();
   GruposEventosService _usuariosAgendaService = new GruposEventosService();
   EventosService _eventosService = new EventosService();
 
@@ -47,17 +43,9 @@ class CadastrarEditarProvider extends ChangeNotifier {
   bool init = true;
   Usuario userAtual = Usuario();
 
-  TextEditingController controllerLocalizacao;
   TextEditingController controllerDataInicial;
   TextEditingController controllerDataFinal;
-  TextEditingController controllerDataFimRecorrente;
-  TextEditingController controllerCliente;
-  TextEditingController controllerClienteId;
   TextEditingController controllerTitulo;
-  TextEditingController controllerQuantidadeRecorrencia;
-  TextEditingController controllerObservacaoInicial;
-  TextEditingController controllerObservacaoFinal;
-  TextEditingController controllerCadastradoPor;
 
   CadastrarEditarProvider(this.context, this.eventoParam, this.atendimento) {
     if (eventoParam.id == null) {
@@ -80,7 +68,6 @@ class CadastrarEditarProvider extends ChangeNotifier {
       : Evento();
     notifyListeners();
   } 
-
   renderExcluir() {
     if (eventoParam.id != null) {
       return FloatingActionButton(
@@ -115,8 +102,6 @@ class CadastrarEditarProvider extends ChangeNotifier {
     controllerDataFinal = new TextEditingController(
         text: DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(dataFinal));
     controllerTitulo = new TextEditingController(text: evento.nome);
-
-    controllerDataFimRecorrente = new TextEditingController(text: '');
   }
 
   void salvar() async {

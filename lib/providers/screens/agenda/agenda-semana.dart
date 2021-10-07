@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:calendar_views/calendar_views.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,6 @@ class AgendaSemanaProvider extends ChangeNotifier {
   List<Evento> events = [];
   final ScrollController scrollController = ScrollController();
   Settings settings = Settings();
-  List<int> _tiposFiltro = []; //variavel do filtro tipo
-  List<int> _usersFiltro = []; //variavel do filtro users
 
   AgendaSemanaProvider(this.context) {
     initializeDateFormatting();
@@ -94,8 +91,6 @@ class AgendaSemanaProvider extends ChangeNotifier {
       date,
       eventosService,
       datas,
-      _tiposFiltro,
-      _usersFiltro,
       _getEventsOfDay
     );
   }

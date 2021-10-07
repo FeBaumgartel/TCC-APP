@@ -1,4 +1,3 @@
-import 'package:tcc_app/models/grupo.dart';
 
 enum RelacionamentosUsuario { grupo }
 

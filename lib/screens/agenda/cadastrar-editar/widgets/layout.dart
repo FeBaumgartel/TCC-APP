@@ -3,10 +3,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:tcc_app/helpers/date-helper.dart';
-import 'package:tcc_app/models/evento.dart';
 import 'package:tcc_app/providers/screens/agenda/cadastrar-editar/cadastrar-editar.dart';
 import 'package:provider/provider.dart';
-import 'package:tcc_app/theme.dart' as ThemeApp;
 
 class LayoutFormulario extends StatelessWidget {
   @override
@@ -17,14 +15,12 @@ class LayoutFormulario extends StatelessWidget {
         bottom: false,
         child: Form(
           key: model.formKey,
-          autovalidate: model.autoValidate,
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
               Container(child: _renderWidget(model.dropdownValue, context)),
               _renderDataInicial(),
               _renderDataFinal(),
-              if (model.evento.id != null) _renderCadastradoPor(),
               Padding(
                 padding: EdgeInsets.only(bottom: 65),
               ),
@@ -160,18 +156,6 @@ class LayoutFormulario extends StatelessWidget {
           }, currentTime: model.dataFinal, locale: LocaleType.pt);
           model.refresh();
         },
-      );
-    });
-  }
-
-  _renderCadastradoPor() {
-    return Consumer<CadastrarEditarProvider>(builder: (context, model, widget) {
-      return TextFormField(
-        controller: model.controllerCadastradoPor,
-        readOnly: true,
-        decoration: const InputDecoration(
-          labelText: 'Evento cadastrado por',
-        ),
       );
     });
   }

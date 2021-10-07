@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:calendar_views/calendar_views.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,6 @@ class AgendaDiaProvider extends ChangeNotifier {
   List<Evento> events = [];
   final ScrollController scrollController = ScrollController();
   Settings settings = Settings();
-  List<int> _tiposFiltro = []; //variavel do filtro tipo
-  List<int> _usersFiltro = []; //variavel do filtro users
 
   AgendaDiaProvider(this.context) {
     initializeDateFormatting();
@@ -88,8 +85,7 @@ class AgendaDiaProvider extends ChangeNotifier {
 
   Widget renderDays(DateTime date, List<DateTime> datas, BuildContext context) {
     EventosService eventosService = EventosService();
-    return ComponenteDia(events, date, eventosService, datas, _tiposFiltro,
-        _usersFiltro, _getEventsOfDay);
+    return ComponenteDia(events, date, eventosService, datas, _getEventsOfDay);
   }
 
   cadastrarEvento() {

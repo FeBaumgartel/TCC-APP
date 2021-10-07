@@ -49,35 +49,13 @@ class EventosService extends RepositorioSimples {
     return evento;
   }
 
-  Future<List<Evento>> getEventsDate(String date, List<int> filtrosTipos,
-      List<int> filtrosUsers, String pesquisa) async {
+  Future<List<Evento>> getEventsDate(String date) async {
     String sql =
       '''
-        SELECT eventos.id, nome, strftime(\'%Y-%m-%d\', data_inicio) as data, data_fim, data_inicio
+        SELECT id, nome, strftime(\'%Y-%m-%d\', data_inicio) as data, data_fim, data_inicio
+        FROM eventos
         WHERE data = ?
-      ''';
-    if (filtrosTipos.isNotEmpty) {
-      sql += 'AND eventos.tipo IN (${filtrosTipos.join(',')})';
-    }
-    if (filtrosUsers.isNotEmpty) {
-      sql +=
-          'AND eventos.id IN (SELECT id_evento FROM evento_envolvidos WHERE id_usuario IN (${filtrosUsers.join(',')}))';
-    }
-    if(pesquisa != ''){
-      sql += '''
-      AND (eventos.titulo LIKE '%$pesquisa%' 
-      OR eventos.localizacao LIKE '%$pesquisa%' 
-      OR eventos.observacao_inicial LIKE '%$pesquisa%' 
-      OR eventos.observacao_final LIKE '%$pesquisa%' 
-      OR eventos.envolvidos LIKE '%$pesquisa%' 
-      OR clientes.nome_fantasia LIKE '%$pesquisa%' 
-      OR eventos.id IN (SELECT id_evento FROM evento_envolvidos WHERE id_usuario IN (SELECT id FROM usuarios WHERE nome LIKE '%$pesquisa%' ))
-      OR eventos.id IN (SELECT id_evento FROM evento_envolvidos WHERE id_representada_contato IN (SELECT id FROM representadas_contatos WHERE nome LIKE '%$pesquisa%' ))
-      OR eventos.id IN (SELECT id_evento FROM evento_envolvidos WHERE id_cliente_contato IN (SELECT id FROM clientes_contatos WHERE nome LIKE '%$pesquisa%' ))
-      )
-      ''';
-    }                        
-    sql += ' AND eventos.deleted_at IS NULL';
+      ''';                 
     List<Map> maps = await _database.db.rawQuery(sql, [date]);
 
     List<Evento> eventos = [];
@@ -113,23 +91,13 @@ class EventosService extends RepositorioSimples {
   }
 
   Future<List<Evento>> getEventsMonth(
-      String month, List<int> filtrosTipos, List<int> filtrosUsers) async {
+      String month) async {
     String sql =
         '''
-        SELECT eventos.id, eventos.id, id_cliente, observacao_inicial, observacao_final, eventos.tipo, eventos.localizacao, titulo, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio, envolvidos, recorrente, codigo_recorrencia, tipo_recorrencia, quantidade_recorrencia, data_fim_recorrencia, tipo_visita, tipo_lembrete, clientes.nome_fantasia as cli_nome_fantasia
-        FROM eventos
-        LEFT JOIN clientes ON clientes.id = eventos.id_cliente
+        SELECT id, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
+        FROM eventos 
         WHERE mes = ?
         ''';
-
-    if (filtrosTipos.isNotEmpty) {
-      sql += 'AND eventos.tipo IN (${filtrosTipos.join(',')}) ';
-    }
-    if (filtrosUsers.isNotEmpty) {
-      sql +=
-          'AND eventos.id IN (SELECT id_evento FROM evento_envolvidos WHERE id_usuario IN (${filtrosUsers.join(',')})) ';
-    }
-    sql += 'AND eventos.deleted_at IS NULL';
     List<Map> maps = await _database.db.rawQuery(sql, [month]);
 
     List<Evento> eventos = [];
@@ -140,8 +108,7 @@ class EventosService extends RepositorioSimples {
     return eventos;
   }
 
-  Future<List<Evento>> getEventsWeek(List<DateTime> week,
-      List<int> filtrosTipos, List<int> filtrosUsers) async {
+  Future<List<Evento>> getEventsWeek(List<DateTime> week) async {
     List<String> weeks = [];
 
    for (int i=0; i < week.length;i++){
@@ -152,19 +119,10 @@ class EventosService extends RepositorioSimples {
    }
     String sql =
       '''
-      SELECT eventos.id, eventos.id, id_cliente, observacao_inicial, observacao_final, eventos.tipo, eventos.localizacao, titulo, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio, envolvidos, recorrente, codigo_recorrencia, tipo_recorrencia, quantidade_recorrencia, data_fim_recorrencia, tipo_visita, tipo_lembrete, clientes.nome_fantasia as cli_nome_fantasia
-      FROM eventos LEFT JOIN clientes ON clientes.id = eventos.id_cliente
+      SELECT id, nome, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
+      FROM eventos
       WHERE data IN (${weeks.join(',')})
     ''';
-
-    if (filtrosTipos.isNotEmpty) {
-      sql += 'AND eventos.tipo IN (${filtrosTipos.join(',')}) ';
-    }
-    if (filtrosUsers.isNotEmpty) {
-      sql +=
-          'AND eventos.id IN (SELECT id_evento FROM evento_envolvidos WHERE id_usuario IN (${filtrosUsers.join(',')})) ';
-    }
-    sql += 'AND eventos.deleted_at IS NULL';
     List<Map> maps = await _database.db.rawQuery(sql, []);
 
     List<Evento> eventos = [];
@@ -178,10 +136,9 @@ class EventosService extends RepositorioSimples {
   Future<Evento> getEvento(int id) async {
     String sql =
       '''
-        SELECT eventos.id, eventos.id, id_cliente, id_usuario, observacao_inicial, observacao_final, eventos.tipo, eventos.localizacao, titulo, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio, envolvidos, recorrente, codigo_recorrencia, tipo_recorrencia, quantidade_recorrencia, data_fim_recorrencia, tipo_visita, tipo_lembrete, clientes.nome_fantasia as cli_nome_fantasia
+        SELECT id, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
         FROM eventos
-        LEFT JOIN clientes ON clientes.id = eventos.id_cliente
-        WHERE eventos.id = ?
+        WHERE id = ?
       ''';
     List<Map> maps = await _database.db.rawQuery(sql, [id]);
     if (maps.length > 0) {

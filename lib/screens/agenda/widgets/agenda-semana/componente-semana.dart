@@ -10,8 +10,6 @@ class ComponenteSemana extends StatelessWidget {
   final DateTime date;
   final EventosService eventosService;
   final List<DateTime> datas;
-  final List<int> tiposFiltro;
-  final List<int> usersFiltro;
   final Iterable<StartDurationItem> Function(DateTime) getEventsOfDay;
 
   const ComponenteSemana(
@@ -19,8 +17,6 @@ class ComponenteSemana extends StatelessWidget {
     this.date,
     this.eventosService,
     this.datas,
-    this.tiposFiltro,
-    this.usersFiltro,
     this.getEventsOfDay, {
     Key key,
   }) : super(key: key);
@@ -55,7 +51,7 @@ class ComponenteSemana extends StatelessWidget {
             scrollDirection: Axis.vertical,
             child: FutureBuilder<List<Evento>>(
                 future: eventosService.getEventsWeek(
-                    datas, tiposFiltro, usersFiltro),
+                    datas),
                 builder:
                     (BuildContext context, AsyncSnapshot<List<Evento>> snap) {
                   if (snap.hasData) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcc_app/components/app-bar.dart';
 import 'package:tcc_app/models/evento.dart';
 import 'package:tcc_app/providers/screens/agenda/agenda.dart';
@@ -21,12 +20,6 @@ class Agenda extends StatelessWidget {
               slivers: [
                 AppBarComponent(
                   title: Text('Agenda'),
-                  onChange: (value) {
-                    model.pesquisar(value);
-                  },
-                  onClose: () {
-                    model.pesquisar('');
-                  },
                   actions: <Widget>[
                     FlatButton(
                       child:

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcc_app/providers/screens/agenda/agenda-dia.dart';
 import 'package:tcc_app/screens/agenda/widgets/fab.dart';
 import 'package:tcc_app/screens/agenda/widgets/menu-agenda.dart';
