@@ -82,25 +82,6 @@ class _AppBarComponentState extends State<AppBarComponentState> {
   Widget icon;
   bool init;
 
-  void _setSearchBar() {
-    Widget element = IconButton(
-      icon: open
-        ? Icon(FontAwesomeIcons.windowClose)
-        : Icon(FontAwesomeIcons.search),
-      onPressed: () {
-        setState(() {
-          if (open) onClose();
-          open = !open;
-        });
-      },
-    );
-    if (init)
-      this.actions.insert(0, element);
-    else
-      this.actions[0] = element;
-    init = false;
-  }
-
   _AppBarComponentState({
     @required this.title,
     this.actions,
@@ -123,29 +104,6 @@ class _AppBarComponentState extends State<AppBarComponentState> {
             color: Colors.white,
           ),
           onChanged: (value) => debouncer.run(() => onChange(value)),
-          decoration: InputDecoration(
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.white,
-              ),
-            ),
-            contentPadding: EdgeInsets.all(8),
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            labelText: 'Pesquisar',
-            labelStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
         ),
         titlePadding: EdgeInsets.symmetric(
           horizontal: 8,
@@ -157,7 +115,6 @@ class _AppBarComponentState extends State<AppBarComponentState> {
 
   @override
   Widget build(BuildContext context) {
-    _setSearchBar();
     return SliverAppBar(
       actions: actions,
       bottom: !open ? bottom : null,

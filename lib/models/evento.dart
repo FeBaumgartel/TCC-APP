@@ -3,14 +3,14 @@ class Evento {
   int id;
   String nome;
   String dataInicio;
-  String dataFinal;
+  String dataFim;
   String data;
 
   Evento({
     this.id,
     this.nome,
     this.dataInicio,
-    this.dataFinal,
+    this.dataFim,
     this.data,
   });
 
@@ -19,8 +19,7 @@ class Evento {
       'id': id,
       'nome': nome,
       'data_inicio': dataInicio,
-      'data_final': dataFinal,
-      'data': data,
+      'data_fim': dataFim,
     };
   }
 
@@ -28,7 +27,7 @@ class Evento {
     id = map['id'];
     nome = map['nome'];
     dataInicio = map['data_inicio'];
-    dataFinal = map['data_final'];
+    dataFim = map['data_fim'];
     data = map['data'];
   }
 }

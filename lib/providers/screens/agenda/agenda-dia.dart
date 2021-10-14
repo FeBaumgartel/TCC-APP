@@ -34,14 +34,14 @@ class AgendaDiaProvider extends ChangeNotifier {
             (event) => StartDurationItem(
               startMinuteOfDay: (DateTime.parse(event.dataInicio).hour * 60) +
                   DateTime.parse(event.dataInicio).minute,
-              duration: ((DateTime.parse(event.dataFinal).hour * 60) +
-                          DateTime.parse(event.dataFinal).minute -
+              duration: ((DateTime.parse(event.dataFim).hour * 60) +
+                          DateTime.parse(event.dataFim).minute -
                           (DateTime.parse(event.dataInicio).hour * 60) +
                           DateTime.parse(event.dataInicio).minute) <
                       0
                   ? 60
-                  : ((DateTime.parse(event.dataFinal).hour * 60) +
-                      DateTime.parse(event.dataFinal).minute -
+                  : ((DateTime.parse(event.dataFim).hour * 60) +
+                      DateTime.parse(event.dataFim).minute -
                       (DateTime.parse(event.dataInicio).hour * 60) +
                       DateTime.parse(event.dataInicio).minute),
               builder: (context, itemPosition, itemSize) => _eventBuilder(

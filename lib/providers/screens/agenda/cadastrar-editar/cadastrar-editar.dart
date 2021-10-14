@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,14 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:tcc_app/helpers/date-helper.dart';
 import 'package:tcc_app/models/evento.dart';
 import 'package:tcc_app/models/usuario.dart';
+import 'package:tcc_app/screens/agenda/cadastrar-editar/widgets/loading.dart';
 import 'package:tcc_app/services/dao/eventos.dart';
-import 'package:tcc_app/services/dao/grupos_eventos.dart';
 import 'package:tcc_app/services/sessao.dart';
 
 class CadastrarEditarProvider extends ChangeNotifier {
   final BuildContext context;
   
-  GruposEventosService _usuariosAgendaService = new GruposEventosService();
   EventosService _eventosService = new EventosService();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -21,42 +21,33 @@ class CadastrarEditarProvider extends ChangeNotifier {
   Evento eventoParam;
   Evento evento;
   String dropdownValue;
-  String tipoVisita = 'Visita de vendas';
   bool checkbox = false;
   bool checkboxEdit = false;
   bool autoValidate = false;
   DateTime minDate;
-  DateTime minDateRecore;
-  int opcaoRecorrente = 0;
-  String recorrentePeriodo = 'dia(s)';
-  int opcaoLembrete = 1;
-  int recorrente = 0;
-  int tipo;
-  DateTime dataInicial;
-  DateTime dataFinal;
-  List<int> datas =[];
-  int tiposVisita = 1;
+  DateTime dataInicio;
+  DateTime dataFim;
+  List<int> datas = List();
   bool enabled = true;
   bool enabledDatetime = true;
   String titulo = 'Editar Evento';
-  List<int> usersId = [];
+  List<int> usersId = List<int>();
   bool init = true;
   Usuario userAtual = Usuario();
 
-  TextEditingController controllerDataInicial;
-  TextEditingController controllerDataFinal;
+  TextEditingController controllerDataInicio;
+  TextEditingController controllerDataFim;
   TextEditingController controllerTitulo;
 
   CadastrarEditarProvider(this.context, this.eventoParam, this.atendimento) {
     if (eventoParam.id == null) {
       init = false;
       titulo = 'Novo Evento';
-      controllerDataInicial = new TextEditingController(text: '');
-      controllerDataFinal = new TextEditingController(text: '');
+      usersId = [];
+      controllerDataInicio = new TextEditingController(text: '');
+      controllerDataFim = new TextEditingController(text: '');
       controllerTitulo = new TextEditingController(text: '');
     }
-    dropdownValue = atendimento ? 'Visita ao cliente' : 'Compromisso';
-    tipo = atendimento ? 2 : 1;
     _build();
   }
 
@@ -67,12 +58,14 @@ class CadastrarEditarProvider extends ChangeNotifier {
       ? await this._eventosService.getEvento(eventoParam.id)
       : Evento();
     notifyListeners();
-  } 
+  }
+
+
   renderExcluir() {
     if (eventoParam.id != null) {
       return FloatingActionButton(
         onPressed: () {
-          _excluirEventos(evento.id);
+            _excluirEventos(evento.id);
         },
         child: Icon(FontAwesomeIcons.trashAlt),
         backgroundColor: Theme.of(context).primaryColor,
@@ -92,15 +85,15 @@ class CadastrarEditarProvider extends ChangeNotifier {
   }
 
   void carregaDadosEvento() {
-    dataInicial = DateTime.parse(evento.dataInicio);
-    dataFinal = DateTime.parse(evento.dataFinal);
-    minDate = dataFinal;
-    datas = DateHelper.separaData(dataInicial);
-    controllerDataInicial = new TextEditingController(
+    dataInicio = DateTime.parse(evento.dataInicio);
+    dataFim = DateTime.parse(evento.dataFim);
+    minDate = dataFim;
+    datas = DateHelper.separaData(dataInicio);
+    controllerDataInicio = new TextEditingController(
         text:
-            DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(dataInicial));
-    controllerDataFinal = new TextEditingController(
-        text: DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(dataFinal));
+            DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(dataInicio));
+    controllerDataFim = new TextEditingController(
+        text: DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(dataFim));
     controllerTitulo = new TextEditingController(text: evento.nome);
   }
 
@@ -108,8 +101,8 @@ class CadastrarEditarProvider extends ChangeNotifier {
     Evento _evento = Evento();
     if (formKey.currentState.validate()) {
       _evento.nome = controllerTitulo.text;
-      _evento.dataInicio = (dataInicial.toString()).split('.000')[0];
-      _evento.dataFinal = (dataFinal.toString()).split('.000')[0];
+      _evento.dataInicio = (dataInicio.toString()).split('.000')[0];
+      _evento.dataFim = (dataFim.toString()).split('.000')[0];
 
       var res;
       if (evento.id == null) {

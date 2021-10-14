@@ -18,9 +18,9 @@ class LayoutFormulario extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             children: <Widget>[
-              Container(child: _renderWidget(model.dropdownValue, context)),
-              _renderDataInicial(),
-              _renderDataFinal(),
+              _renderTitulo(),
+              _renderDataInicio(),
+              _renderDataFim(),
               Padding(
                 padding: EdgeInsets.only(bottom: 65),
               ),
@@ -31,68 +31,10 @@ class LayoutFormulario extends StatelessWidget {
     });
   }
 
-  _renderWidget(String _dropdownValue, BuildContext context) {
-    if (_dropdownValue == 'Compromisso') {
-      return Column(
-        children: <Widget>[
-          _renderTitulo(),
-          Divider(
-            color: Colors.grey,
-            thickness: 1,
-          ),
-        ],
-      );
-    } else if (_dropdownValue == 'Visita ao cliente' ||
-        _dropdownValue == 'Visita do cliente') {
-      return Consumer<CadastrarEditarProvider>(
-          builder: (context, model, widget) {
-        return Column(
-          children: <Widget>[
-            _renderTitulo(),
-            Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-          ],
-        );
-      });
-    } else if (_dropdownValue == 'Reunião interna') {
-      return Column(
-        children: <Widget>[
-          _renderTitulo(),
-        ],
-      );
-    } else if (_dropdownValue == 'Lembretes') {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Divider(
-            color: Colors.grey,
-            thickness: 1,
-          ),
-          _renderTitulo(),
-        ],
-      );
-    } else if (_dropdownValue == 'Videoconferência') {
-      return Consumer<CadastrarEditarProvider>(
-          builder: (context, model, widget) {
-        return Column(
-          children: <Widget>[
-            _renderTitulo(),
-            Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-          ],
-        );
-      });
-    }
-  }
-
-  _renderDataInicial() {
+  _renderDataInicio() {
     return Consumer<CadastrarEditarProvider>(builder: (context, model, widget) {
       return TextFormField(
-        controller: model.controllerDataInicial,
+        controller: model.controllerDataInicio,
         readOnly: true,
         enabled: model.enabledDatetime,
         style: model.enabledDatetime
@@ -103,7 +45,7 @@ class LayoutFormulario extends StatelessWidget {
           suffixIcon: Icon(FontAwesomeIcons.clock),
         ),
         keyboardType: TextInputType.text,
-        validator: (str) => (model.controllerDataInicial.text == '')
+        validator: (str) => (model.controllerDataInicio.text == '')
             ? "O evento deve ter uma data inicial."
             : null,
         onTap: () {
@@ -112,12 +54,12 @@ class LayoutFormulario extends StatelessWidget {
               minTime: DateTime.now(), onConfirm: (date) {
             model.minDate = date.add(Duration(hours: 1));
             model.datas = DateHelper.separaData(date);
-            model.dataInicial = date;
+            model.dataInicio = date;
 
-            model.dataFinal = model.minDate;
-            model.controllerDataInicial.text =
+            model.dataFim = model.minDate;
+            model.controllerDataInicio.text =
                 new DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(date);
-            model.controllerDataFinal.text =
+            model.controllerDataFim.text =
                 DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR")
                     .format(model.minDate);
           }, currentTime: DateTime.now(), locale: LocaleType.pt);
@@ -127,10 +69,10 @@ class LayoutFormulario extends StatelessWidget {
     });
   }
 
-  _renderDataFinal() {
+  _renderDataFim() {
     return Consumer<CadastrarEditarProvider>(builder: (context, model, widget) {
       return TextFormField(
-        controller: model.controllerDataFinal,
+        controller: model.controllerDataFim,
         readOnly: true,
         enabled: model.enabledDatetime,
         style: model.enabledDatetime
@@ -140,7 +82,7 @@ class LayoutFormulario extends StatelessWidget {
           labelText: 'Termina',
           suffixIcon: Icon(FontAwesomeIcons.clock),
         ),
-        validator: (str) => (model.controllerDataFinal.text == '')
+        validator: (str) => (model.controllerDataFim.text == '')
             ? "O evento deve ter uma data final."
             : null,
         keyboardType: TextInputType.text,
@@ -151,9 +93,9 @@ class LayoutFormulario extends StatelessWidget {
                   model.datas[3], model.datas[4]), onConfirm: (date) {
             var time =
                 new DateFormat("dd 'de' MMMM',' y HH:mm", "pt_BR").format(date);
-            model.dataFinal = date;
-            model.controllerDataFinal.text = time;
-          }, currentTime: model.dataFinal, locale: LocaleType.pt);
+            model.dataFim = date;
+            model.controllerDataFim.text = time;
+          }, currentTime: model.dataFim, locale: LocaleType.pt);
           model.refresh();
         },
       );

@@ -14,7 +14,7 @@ class ListaEventos extends StatelessWidget {
         children: eventos[selectedDay]
             .map((eventos) => Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF825EE4).withOpacity(0.16),
+                  color: Color(0xFF3F559E).withOpacity(0.16),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 margin:

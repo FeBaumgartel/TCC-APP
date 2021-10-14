@@ -13,7 +13,7 @@ class CadastrarEditarEvento extends StatelessWidget {
     return ChangeNotifierProvider<CadastrarEditarProvider>(
       create: (context) => CadastrarEditarProvider(context, eventoParam, atendimento),
       child:
-          Consumer<CadastrarEditarProvider>(builder: (context, model, widget) {
+        Consumer<CadastrarEditarProvider>(builder: (context, model, widget) {
         return Scaffold(
           appBar: AppBar(
             actions: <Widget>[

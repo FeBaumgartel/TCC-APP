@@ -44,6 +44,7 @@ dependencies:
   date_utils: ^0.1.0+3
   dio: ^3.0.9
   overlay_support: ^1.0.3
+  package_info: ^0.4.0+18
   
   flutter_localizations:
     sdk: flutter

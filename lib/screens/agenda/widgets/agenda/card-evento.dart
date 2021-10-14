@@ -29,7 +29,7 @@ class CardEvento extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xFF825EE4).withOpacity(0.26),
+            color: Color(0xFF3F559E).withOpacity(0.26),
           ),
           margin: settings.contentMargin,
           padding: EdgeInsets.all(16),
