@@ -1,8 +1,8 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tcc_app/screens/login/login.dart';
 import 'package:tcc_app/screens/agenda/agenda.dart';
-// import 'package:biribi_financas/screens/principal/principal.dart';
-// import 'package:biribi_financas/screens/movimentacao/movimentacao.dart';
+import 'package:tcc_app/screens/home/home.dart';
+import 'package:tcc_app/screens/landing-page.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +13,8 @@ import 'package:overlay_support/overlay_support.dart';
 class Routes {
   final routes = <String, WidgetBuilder>{
     '/login': (BuildContext context) => Login(),
+    '/home': (BuildContext context) => Home(),
+    '/landingpage': (BuildContext context) => LandingPage(),
     '/agenda': (BuildContext context) => Agenda(),
   };
 
@@ -38,7 +40,7 @@ class TccApp extends StatelessWidget {
     this.routes,
   }) : super(key: key);
 
-  final Map<String, Widget Function(BuildContext)> routes;
+  final Map routes;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,9 @@ class TccApp extends StatelessWidget {
     return new MaterialApp(
       theme: themeNotifier.getTheme(),
       routes: routes,
+      onGenerateRoute: (RouteSettings settings) {
+        return routes['/home'];
+      },
       home: new Login(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -69,5 +74,4 @@ class ThemeNotifier with ChangeNotifier {
     _themeData = themeData;
     notifyListeners();
   }
-
 }
