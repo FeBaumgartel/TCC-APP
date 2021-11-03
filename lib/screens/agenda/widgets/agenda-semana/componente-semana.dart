@@ -35,7 +35,7 @@ class ComponenteSemana extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           padding: EdgeInsets.all(5),
-          color: Theme.of(context).primaryColor.withOpacity(0.12),
+          color: Theme.of(context).primaryColor.withOpacity(0.8),
           width: MediaQuery.of(context).size.width <= 360
               ? 780
               : MediaQuery.of(context).size.width,

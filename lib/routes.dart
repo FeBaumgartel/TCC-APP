@@ -1,6 +1,7 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tcc_app/screens/login/login.dart';
 import 'package:tcc_app/screens/agenda/agenda.dart';
+import 'package:tcc_app/screens/hinos/hinos.dart';
 import 'package:tcc_app/screens/home/home.dart';
 import 'package:tcc_app/screens/landing-page.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
@@ -16,6 +17,7 @@ class Routes {
     '/home': (BuildContext context) => Home(),
     '/landingpage': (BuildContext context) => LandingPage(),
     '/agenda': (BuildContext context) => Agenda(),
+    '/hinos': (BuildContext context) => Hinos(),
   };
 
 

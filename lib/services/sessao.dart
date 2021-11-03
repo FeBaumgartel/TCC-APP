@@ -33,7 +33,7 @@ class Sessao {
   Future<void> setUsuario(Usuario usuario) async {
     if (usuario != null) {
       this.usuario.add(usuario);
-      this.storageKey = 'multiplier.${usuario.id}';
+      this.storageKey = 'tcc_app.${usuario.id}';
       await this
           ._storage
           .write(key: this.storageKey, value: jsonEncode(usuario))
@@ -55,7 +55,7 @@ class Sessao {
     Map<String, String> _storage = await this._storage.readAll();
 
     _storage.removeWhere((String chave, String valor) {
-      return !chave.startsWith('multiplier.');
+      return !chave.startsWith('tcc_app.');
     });
 
     List<Usuario> usuarios = [];

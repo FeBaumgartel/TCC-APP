@@ -20,7 +20,7 @@ class ComponenteDia extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: Theme.of(context).primaryColor.withOpacity(0.12),
+          color: Theme.of(context).primaryColor.withOpacity(0.8),
           child: DayViewDaysHeader(
             headerItemBuilder: _headerItemBuilder,
           ),

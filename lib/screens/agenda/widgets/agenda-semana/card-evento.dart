@@ -26,7 +26,7 @@ class CardEvento extends StatelessWidget {
           padding: MediaQuery.of(context).size.width <= 360
               ? EdgeInsets.all(0.3)
               : EdgeInsets.all(0.5),
-          color: Color(0xFF3F559E).withOpacity(0.16),
+          color: Color(0xFF3F559E).withOpacity(0.8),
           child: Text("${event.nome}", style: TextStyle(color: Colors.white)),
         ),
       );

@@ -4,8 +4,6 @@ import 'package:tcc_app/models/hino.dart';
 import 'package:tcc_app/services/sincronizacao/atualizacao/repositorio.dart';
 import 'package:tcc_app/services/sincronizacao/atualizacao/evento-database.dart';
 import 'package:sqflite/sql.dart';
-import 'package:tcc_app/helpers/string-helper.dart';
-import 'package:tcc_app/helpers/date-helper.dart';
 import 'package:tcc_app/services/database.dart' as data;
 import 'package:sqflite/sqlite_api.dart';
 
@@ -48,13 +46,28 @@ class HinosService extends RepositorioSimples {
     return hino;
   }
 
-  Future<List<Hino>> getEventsAll() async {
-    List<Map> maps = await _database.db.query(_tabela);
-    List<Hino> hinos = [];
+  Future<List<Hino>> getHinos({
+    int pagina = 1,
+    int porPagina = 10
+  }) async {
+    List<Map> maps = await _database.db.query(
+      _tabela,
+      orderBy: 'id DESC',
+      limit: porPagina,
+      offset: (porPagina * (pagina - 1)),
+    );
 
-    maps.forEach((element) {
-      hinos.add(Hino.fromMap(element as Map<String, dynamic>));
-    });
+    if (maps.length == 0) {
+      return new List<Hino>();
+    }
+
+    List<Hino> hinos = new List<Hino>();
+
+    for (dynamic p in maps) {
+      Hino hino = Hino.fromMap(p);
+      hinos.add(hino);
+    }
+
     return hinos;
   }
 
@@ -104,6 +117,18 @@ class HinosService extends RepositorioSimples {
         columns: ['id'], where: 'id = ?', whereArgs: [idServidor]);
 
     return result.first['id'];
+  }
+
+  Future<void> delete(int id) async {
+    Batch batch = _database.db.batch();
+
+    batch.delete(
+      _tabela,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    await batch.commit();
   }
 
   @override
