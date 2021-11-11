@@ -1,4 +1,7 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tcc_app/screens/hinos/cadastrar-editar/cadastrar-editar.dart';
+import 'package:tcc_app/screens/hinos/visualizar/visualizar.dart'
+    as HinoVisualizar;
 import 'package:tcc_app/screens/login/login.dart';
 import 'package:tcc_app/screens/agenda/agenda.dart';
 import 'package:tcc_app/screens/hinos/hinos.dart';
@@ -9,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-
-
 class Routes {
   final routes = <String, WidgetBuilder>{
     '/login': (BuildContext context) => Login(),
@@ -18,6 +19,9 @@ class Routes {
     '/landingpage': (BuildContext context) => LandingPage(),
     '/agenda': (BuildContext context) => Agenda(),
     '/hinos': (BuildContext context) => Hinos(),
+    '/hinos/cadastrar': (BuildContext context) => CadastrarEditar(),
+    '/hinos/visualizar': (BuildContext context) =>
+        HinoVisualizar.Visualizar(),
   };
 
 

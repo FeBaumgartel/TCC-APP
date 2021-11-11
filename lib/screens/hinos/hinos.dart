@@ -35,7 +35,6 @@ class _HinosPageState extends State<HinosPage> {
   bool _loading = false;
   Future<List<Widget>> _future;
   int _pagina = 1;
-  bool _podeCadastrar = false;
 
   _HinosPageState() {
     _scrollController.addListener(() {
@@ -55,6 +54,7 @@ class _HinosPageState extends State<HinosPage> {
     List<Hino> hinos;
 
     hinos = await this._hinosService.getHinos(pagina: _pagina);
+debugPrint('movieTitle: $hinos');
 
     if (hinos.length > 0) {
       if (hinos.length < 10) {
@@ -99,6 +99,7 @@ class _HinosPageState extends State<HinosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(title: Text('Hinos')),
       body: new FutureBuilder<List<Widget>>(
         future: _future,
         builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
@@ -147,14 +148,12 @@ class _HinosPageState extends State<HinosPage> {
           }
         },
       ),
-      floatingActionButton: (_podeCadastrar)
-          ? FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
               child: Icon(FontAwesomeIcons.plus),
               onPressed: () {
                 Navigator.of(context).pushNamed('/hinos/cadastrar',
                     arguments: <String, dynamic>{
-                      "hino": null,
-                      "endereco": null
+                      "hino": null
                     }).then((value) => this.setState(() {
                       _scrollController.jumpTo(0);
                       _pagina = 1;
@@ -163,7 +162,6 @@ class _HinosPageState extends State<HinosPage> {
                     }));
               },
             )
-          : null,
     );
   }
 }

@@ -22,7 +22,7 @@ class _CadastrarEditarPageState extends State<CadastrarEditarPage> {
   final _formKey = GlobalKey<FormState>();
   String dropdownValue = 'Pessoa Jurídica';
   Hino hino = Hino();
-  HinosService hinoService = HinosService();
+  HinosService hinosService = HinosService();
   bool carregado = false;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -138,11 +138,21 @@ class _CadastrarEditarPageState extends State<CadastrarEditarPage> {
   }
 
   void _validateInputs() async {
+    Hino _hino = Hino();
     if (_formKey.currentState.validate()) {
-      this.hino.nome = _controllerNome.text;
-      this.hino.letra = _controllerLetra.text;
+      _hino.nome = _controllerNome.text;
+      _hino.letra = _controllerLetra.text;
       
-      Navigator.of(context).pop();
+      var res;
+      if (hino.id == null) {
+        res = await this.hinosService.insert(_hino);
+      } else {
+        _hino.id = hino.id;
+        res = await this.hinosService.updateHinos(_hino);
+      }
+      if (res != null) {
+        Navigator.pop(context);
+      }
     } else {
       setState(() {
         _autoValidate = true;
@@ -181,7 +191,8 @@ class _CadastrarEditarPageState extends State<CadastrarEditarPage> {
           decoration: InputDecoration(
             labelText: 'Letra',
           ),
-          keyboardType: TextInputType.text,
+          maxLines: null,
+          keyboardType: TextInputType.multiline,
           validator: validateNome,
         ),
       ],

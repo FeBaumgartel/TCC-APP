@@ -26,31 +26,16 @@ class _VisualizarPageState extends State<VisualizarPage> {
   final ScrollController _scrollController = ScrollController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _hinosService = HinosService();
-  int _selectedIndex = 0;
   Hino _hino;
   Future<List<Widget>> _future;
   List<Widget> _widgets = List<Widget>();
   dynamic _arguments;
-  bool _podeEditar = false;
 
   @override
   void initState() {
     super.initState();
     _arguments = ModalRoute.of(widget.context).settings.arguments;
-    _future = _build(_arguments.idLocal);
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = (index == 1) ? 0 : index;
-      _future = _build(_arguments.idLocal);
-    });
-  }
-
-  Future<Hino> _getHino(int id) async {
-    _hino = await _hinosService.getHino(id);
-
-    return _hino;
+    _future = _build(_arguments.id);
   }
 
   Future<List<Widget>> _build(int id) async {
@@ -73,20 +58,20 @@ class _VisualizarPageState extends State<VisualizarPage> {
               SliverAppBar(
                   pinned: true,
                   expandedHeight: 170,
-                  title: Text(_arguments.nomeFantasia),
+                  title: Text(_arguments.nome),
                   flexibleSpace: FadeOnScroll(
                       scrollController: _scrollController,
                       fullOpacityOffset: 50,
                       child: Stack(
                         children: <Widget>[
-                          if (_arguments.razaoSocial != null &&
-                              _arguments.razaoSocial.replaceAll(" ", "") != "")
+                          if (_arguments.letra != null &&
+                              _arguments.letra.replaceAll(" ", "") != "")
                             Container(
                               padding: EdgeInsets.only(left: 69, right: 16),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  _arguments.razaoSocial,
+                                  _arguments.letra,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -94,37 +79,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
                                 ),
                               ),
                             ),
-                          if (_arguments.cnpjCpf != null &&
-                              _arguments.cnpjCpf.replaceAll(" ", "") != "")
-                            Container(
-                              padding:
-                                  EdgeInsets.only(top: 65, left: 69, right: 16),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  _arguments.cnpjCpf,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          //if(arguments.cnpjCpf != null && arguments.cnpjCpf.replaceAll(" ", "") != "")
-                          Container(
-                            padding:
-                                EdgeInsets.only(top: 130, left: 69, right: 16),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Hino desde: 03/02/2020',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ))),
               if (loaded != null)
@@ -136,28 +90,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
                 ),
             ]),
             floatingActionButton: _bottomButtons(),
-            bottomNavigationBar: BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              selectedIconTheme:
-                  IconThemeData(color: ThemeApp.Theme.primaryContrast),
-              unselectedIconTheme: IconThemeData(
-                  color: ThemeApp.Theme.primaryContrast.withOpacity(0.72)),
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.mapMarkedAlt),
-                  title: Text('Endereço'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.eye),
-                  title: Text('Visualizar'),
-                ),
-              ],
-              backgroundColor: Theme.of(context).primaryColor,
-              currentIndex: _selectedIndex,
-              selectedItemColor: ThemeApp.Theme.primaryContrast,
-              onTap: _onItemTapped,
-            ),
           );
         } else {
           return Center(child: CircularProgressIndicator());
@@ -172,27 +104,23 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   SpeedDial _renderSpeedDial() {
     List<SpeedDialChild> children = [
-      if (_podeEditar)
-        SpeedDialChild(
-          child: Icon(FontAwesomeIcons.pencilAlt, color: Colors.grey[600]),
-          onTap: () => Navigator.pushNamed(
-            context,
-            '/hinos/cadastrar',
-            arguments: <String, dynamic>{
-              "hino": _arguments,
-              "endereco": _arguments.enderecos.isEmpty
-                  ? null
-                  : _arguments.enderecos.first
+      SpeedDialChild(
+        child: Icon(FontAwesomeIcons.pencilAlt, color: Colors.grey[600]),
+        onTap: () => Navigator.pushNamed(
+          context,
+          '/hinos/cadastrar',
+          arguments: <String, dynamic>{
+            "hino": _arguments
+          },
+        ).then(
+          (value) => setState(
+            () {
+              _future = _build(_arguments.id);
             },
-          ).then(
-            (value) => setState(
-              () {
-                _future = _build(_arguments.idLocal);
-              },
-            ),
           ),
-          backgroundColor: Colors.white,
         ),
+        backgroundColor: Colors.white,
+      ),
       if (_arguments.id == null)
         SpeedDialChild(
           child: Icon(FontAwesomeIcons.trash, color: Colors.grey[600]),

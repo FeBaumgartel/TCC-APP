@@ -30,12 +30,6 @@ class HinosService extends RepositorioSimples {
 
     await _database.db.rawQuery(query, [id]);
   }
-
-  List<Hino> hinosDia(DateTime data) {
-
-
-    return [];
-  }
   
   Future<Hino> updateHinos(
     Hino hino) async {

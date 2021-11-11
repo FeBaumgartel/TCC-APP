@@ -56,7 +56,7 @@ class Item extends StatelessWidget {
                 ),
               if (_hino.letra != null &&
                   _hino.letra.replaceAll(" ", "") != "")
-                _renderLinhaDados(_hino.letra, FontAwesomeIcons.phoneAlt),
+                _renderLinhaDados(_hino.letra),
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
               ),
@@ -67,18 +67,13 @@ class Item extends StatelessWidget {
     );
   }
 
-  _renderLinhaDados(String texto, IconData icone) {
+  _renderLinhaDados(String texto) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 5.0),
-            child: Icon(
-              icone,
-              color: Colors.grey[600],
-              size: 15,
-            ),
           ),
           Flexible(
             child: Padding(
