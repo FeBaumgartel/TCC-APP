@@ -33,12 +33,6 @@ class EventosService extends RepositorioSimples {
 
     await _database.db.rawQuery(query, [id]);
   }
-
-  List<Evento> eventosDia(DateTime data) {
-
-
-    return [];
-  }
   
   Future<Evento> updateEventos(
     Evento evento) async {
