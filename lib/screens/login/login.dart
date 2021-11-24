@@ -1,5 +1,6 @@
 import 'package:tcc_app/models/usuario.dart';
 import 'package:tcc_app/routes.dart';
+import 'package:tcc_app/services/sessao.dart';
 import 'package:tcc_app/services/usuarios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -20,6 +21,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
+  final Sessao _sessao = Sessao.create();
   final _formKey = GlobalKey<FormState>();
 
   ThemeNotifier themeNotifier;
@@ -211,6 +213,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                           await Navigator.pushNamed(
                                               context, '/landingpage',
                                               arguments: {'usuario': usuario});
+
+                                          await this._sessao.setUsuario(
+                                            usuario
+                                          );
                                         } else {_showDialog();}
                                       });
                                 }),
