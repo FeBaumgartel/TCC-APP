@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tcc_app/models/hino.dart';
+import 'package:tcc_app/models/grupo.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
-import 'package:tcc_app/screens/hinos/visualizar/widgets/fade_on_scroll.dart';
-import 'package:tcc_app/services/dao/hinos.dart';
+import 'package:tcc_app/screens/grupos/visualizar/widgets/fade_on_scroll.dart';
+import 'package:tcc_app/services/dao/grupos.dart';
 
 class Visualizar extends StatelessWidget {
   @override
@@ -24,8 +24,7 @@ class VisualizarPage extends StatefulWidget {
 class _VisualizarPageState extends State<VisualizarPage> {
   final ScrollController _scrollController = ScrollController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _hinosService = HinosService();
-  Hino _hino;
+  final _gruposService = GruposService();
   Future<List<Widget>> _future;
   List<Widget> _widgets = List<Widget>();
   dynamic _arguments;
@@ -63,14 +62,14 @@ class _VisualizarPageState extends State<VisualizarPage> {
                       fullOpacityOffset: 50,
                       child: Stack(
                         children: <Widget>[
-                          if (_arguments.letra != null &&
-                              _arguments.letra.replaceAll(" ", "") != "")
+                          if (_arguments.descricao != null &&
+                              _arguments.descricao.replaceAll(" ", "") != "")
                             Container(
                               padding: EdgeInsets.only(left: 69, right: 16),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  _arguments.letra,
+                                  _arguments.descricao,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -107,9 +106,9 @@ class _VisualizarPageState extends State<VisualizarPage> {
         child: Icon(FontAwesomeIcons.pencilAlt, color: Colors.grey[600]),
         onTap: () => Navigator.pushNamed(
           context,
-          '/hinos/cadastrar',
+          '/grupos/cadastrar',
           arguments: <String, dynamic>{
-            "hino": _arguments
+            "grupo": _arguments
           },
         ).then(
           (value) => setState(
@@ -141,14 +140,14 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   Future<void> _excluir() async {
     try {
+      await _gruposService.delete(_arguments.id);
       Navigator.of(context).pop();
-      await _hinosService.delete(_hino.id);
       Navigator.of(context).pop();
     } catch (e) {
       Navigator.pop(context);
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
-          content: Text('Houve um problema ao excluir o hino!'),
+          content: Text('Houve um problema ao excluir o grupo!'),
           backgroundColor: Colors.red,
         ),
       );
@@ -160,7 +159,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Excluir hino'),
+          title: Text('Excluir grupo'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -171,7 +170,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
                       text: ' excluir ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: 'esse hino?'),
+                    TextSpan(text: 'esse grupo?'),
                   ],
                 ))
               ],
