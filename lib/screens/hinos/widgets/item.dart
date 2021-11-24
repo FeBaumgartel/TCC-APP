@@ -56,7 +56,7 @@ class Item extends StatelessWidget {
                 ),
               if (_hino.letra != null &&
                   _hino.letra.replaceAll(" ", "") != "")
-                _renderLinhaDados(_hino.letra),
+                    _renderLinhaDados(_hino.letra),
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
               ),
@@ -68,6 +68,9 @@ class Item extends StatelessWidget {
   }
 
   _renderLinhaDados(String texto) {
+    if(texto.length > 200){
+      texto = texto.substring(0, 200) + "...";	
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
