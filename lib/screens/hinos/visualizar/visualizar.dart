@@ -26,7 +26,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
   final ScrollController _scrollController = ScrollController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _hinosService = HinosService();
-  Hino _hino;
   Future<List<Widget>> _future;
   List<Widget> _widgets = List<Widget>();
   dynamic _arguments;
@@ -50,21 +49,18 @@ class _VisualizarPageState extends State<VisualizarPage> {
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
         if (snapshot.hasData) {
-          List<Widget> loaded = snapshot.data;
           return Scaffold(
             key: _scaffoldKey,
             body: CustomScrollView(controller: _scrollController, slivers: <
                 Widget>[
               SliverAppBar(
                   pinned: true,
-                  expandedHeight: 170,
-                  title: Text(_arguments.nome),
-                  flexibleSpace: FadeOnScroll(
-                      scrollController: _scrollController,
-                      fullOpacityOffset: 50,
-                      child: Stack(
-                        children: <Widget>[
-                          if (_arguments.letra != null &&
+                  title: Text(_arguments.nome)),
+                SliverFillRemaining(
+                  child: ListView(
+                    padding: EdgeInsets.only(top: 5),
+                    children: <Widget>[
+                      if (_arguments.letra != null &&
                               _arguments.letra.replaceAll(" ", "") != "")
                             Container(
                               padding: EdgeInsets.only(left: 69, right: 16),
@@ -73,19 +69,13 @@ class _VisualizarPageState extends State<VisualizarPage> {
                                 child: Text(
                                   _arguments.letra,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontSize: 16,
                                   ),
                                 ),
                               ),
                             ),
-                        ],
-                      ))),
-              if (loaded != null)
-                SliverFillRemaining(
-                  child: ListView(
-                    padding: EdgeInsets.only(top: 5),
-                    children: loaded,
+                    ],
                   ),
                 ),
             ]),
@@ -121,12 +111,11 @@ class _VisualizarPageState extends State<VisualizarPage> {
         ),
         backgroundColor: Colors.white,
       ),
-      if (_arguments.id == null)
-        SpeedDialChild(
-          child: Icon(FontAwesomeIcons.trash, color: Colors.grey[600]),
-          onTap: () => _showAlertExcluir(),
-          backgroundColor: Colors.white,
-        ),
+      SpeedDialChild(
+        child: Icon(FontAwesomeIcons.trash, color: Colors.grey[600]),
+        onTap: () => _showAlertExcluir(),
+        backgroundColor: Colors.white,
+      ),
     ];
 
     if (children.isEmpty) {
@@ -142,8 +131,8 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   Future<void> _excluir() async {
     try {
+      await _hinosService.delete(_arguments.id);
       Navigator.of(context).pop();
-      await _hinosService.delete(_hino.id);
       Navigator.of(context).pop();
     } catch (e) {
       Navigator.pop(context);

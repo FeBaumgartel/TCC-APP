@@ -5,7 +5,6 @@ import 'package:tcc_app/models/hino.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
 import 'package:tcc_app/screens/hinos/visualizar/widgets/fade_on_scroll.dart';
 import 'package:tcc_app/services/dao/hinos.dart';
-import './widgets/fade_on_scroll.dart';
 
 class Visualizar extends StatelessWidget {
   @override

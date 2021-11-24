@@ -23,7 +23,7 @@ class HinosService extends RepositorioSimples {
     return hino;
   }
 
-  Future<void> excluirHinos(id, bool excluirTodos, bool forceDelete) async {
+  Future<void> delete(int id) async {
     String queryDelete = 'DELETE FROM hinos WHERE ';
     String where = 'id = ?';
     String query = queryDelete + where;
@@ -111,18 +111,6 @@ class HinosService extends RepositorioSimples {
         columns: ['id'], where: 'id = ?', whereArgs: [idServidor]);
 
     return result.first['id'];
-  }
-
-  Future<void> delete(int id) async {
-    Batch batch = _database.db.batch();
-
-    batch.delete(
-      _tabela,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    await batch.commit();
   }
 
   @override
