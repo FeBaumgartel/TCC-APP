@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tcc_app/models/usuario.dart';
 import 'package:tcc_app/routes.dart';
-import 'package:tcc_app/services/dao/usuarios.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:tcc_app/services/database.dart';
 
 class Sessao {
   static Sessao sessao;
@@ -76,13 +74,17 @@ class Sessao {
 
   Future<Usuario> getUsuario() async {
     return await this._storage.read(key: 'usuario').then((String usuario) async {
-      dynamic obj = jsonDecode(usuario);
+      if(usuario != null) {
+        dynamic obj = jsonDecode(usuario);
 
-      return new Usuario(
-        id: obj['id'],
-        nome: obj['nome'],
-        email: obj['email']
-      );
+        return new Usuario(
+          id: obj['id'],
+          nome: obj['nome'],
+          email: obj['email']
+        );
+      }
+      
+      return null;
     });
   }
 

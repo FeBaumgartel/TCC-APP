@@ -34,4 +34,24 @@ class Usuario {
     senha = map['senha'];
     id_grupo = map['id_grupo'];
   }
+
+  // função pra autenticação e sessão do usuário
+  Usuario.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nome = json['nome'];
+    email = json['email'];
+    senha = json['senha'];
+    id_grupo = json['id_grupo'];
+  }
+
+  // função pra autenticação e sessão do usuário
+  Map<String, dynamic> toJson() {
+    return <String, dynamic> {
+      'id': id,
+      'nome': nome,
+      'email': email,
+      'senha': senha,
+      'id_grupo': id_grupo,
+    };
+  }
 }
