@@ -1,10 +1,16 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:tcc_app/screens/hinos/cadastrar-editar/cadastrar-editar.dart';
+import 'package:tcc_app/screens/hinos/cadastrar-editar/cadastrar-editar.dart'
+    as HinoCadastrarEditar;
 import 'package:tcc_app/screens/hinos/visualizar/visualizar.dart'
     as HinoVisualizar;
+import 'package:tcc_app/screens/grupos/cadastrar-editar/cadastrar-editar.dart'
+    as GrupoCadastrarEditar;
+import 'package:tcc_app/screens/grupos/visualizar/visualizar.dart'
+    as GrupoVisualizar;
 import 'package:tcc_app/screens/login/login.dart';
 import 'package:tcc_app/screens/agenda/agenda.dart';
 import 'package:tcc_app/screens/hinos/hinos.dart';
+import 'package:tcc_app/screens/grupos/grupos.dart';
 import 'package:tcc_app/screens/home/home.dart';
 import 'package:tcc_app/screens/landing-page.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
@@ -19,9 +25,13 @@ class Routes {
     '/landingpage': (BuildContext context) => LandingPage(),
     '/agenda': (BuildContext context) => Agenda(),
     '/hinos': (BuildContext context) => Hinos(),
-    '/hinos/cadastrar': (BuildContext context) => CadastrarEditar(),
+    '/hinos/cadastrar': (BuildContext context) => HinoCadastrarEditar.CadastrarEditar(),
     '/hinos/visualizar': (BuildContext context) =>
         HinoVisualizar.Visualizar(),
+    '/grupos': (BuildContext context) => Grupos(),
+    '/grupos/cadastrar': (BuildContext context) => GrupoCadastrarEditar.CadastrarEditar(),
+    '/grupos/visualizar': (BuildContext context) =>
+        GrupoVisualizar.Visualizar(),
   };
 
 
