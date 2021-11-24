@@ -38,7 +38,7 @@ class CardEvento extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                eventos[index].nome as String,
+                eventos[index].nome,
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,

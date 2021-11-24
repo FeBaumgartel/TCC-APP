@@ -3,6 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:tcc_app/helpers/date-helper.dart';
+import 'package:tcc_app/models/grupo.dart';
 import 'package:tcc_app/providers/screens/agenda/cadastrar-editar/cadastrar-editar.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,33 @@ class LayoutFormulario extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(bottom: 65),
               ),
+              FormField(
+                builder: (FormFieldState state) {
+                  return InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: 'Selecione um Grupo',
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                          alignedDropdown: false,
+                          child: DropdownButton(
+                            value: model.selectGrupo,
+                            isDense: true,
+                            onChanged: (String newValue) {
+                              model.selectGrupo = newValue;
+                            },
+                            items: model.grupos
+                                .map<DropdownMenuItem<String>>((Grupo value) {
+                              return new DropdownMenuItem<String>(
+                                  value: value.id.toString(),
+                                  child: Text(value.nome));
+                            }).toList(),
+                          ),
+                        ),
+                      )
+                    );
+                  },
+                ),
             ],
           ),
         ),

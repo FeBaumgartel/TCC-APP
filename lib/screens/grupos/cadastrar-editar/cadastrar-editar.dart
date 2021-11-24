@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcc_app/models/grupo.dart';
 import 'package:tcc_app/services/dao/grupos.dart';
 
@@ -40,100 +39,6 @@ class _CadastrarEditarPageState extends State<CadastrarEditarPage> {
 
   String validateNome(String value) {
     if (value.length < 2) return 'Nome deve ter pelo menos 2 caracteres.';
-    return null;
-  }
-
-  String validateEmail(String value) {
-    if (value != null && value.replaceAll(' ', '') != '') {
-      Pattern pattern =
-          r'''^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$''';
-      RegExp regex = RegExp(pattern);
-      if (!regex.hasMatch(value)) return 'Digite um Email válido.';
-    }
-    return null;
-  }
-
-  String validateTelefone(String value) {
-    if (value != null && value.replaceAll(' ', '') != '') {
-      String patttern = r'(\(\d{2}\)\s)(\d{4}\-\d{4})';
-      RegExp regExp = RegExp(patttern);
-      if (!regExp.hasMatch(value)) {
-        return 'O número de telefone inválido';
-      }
-    }
-    return null;
-  }
-
-  String validateCPF(String value) {
-    if (value != null && value.replaceAll(' ', '') != '') {
-      String patttern = r'^\d{3}\.\d{3}\.\d{3}\-\d{2}$';
-      RegExp regExp = RegExp(patttern);
-      if (!regExp.hasMatch(value)) {
-        return 'O CPF é inválido';
-      }
-    }
-    return null;
-  }
-
-  String validateCNPJ(String value) {
-    if (value != null && value.replaceAll(' ', '') != '') {
-      String patttern = r'^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$';
-      RegExp regExp = RegExp(patttern);
-      if (!regExp.hasMatch(value)) {
-        return 'O CNPJ é inválido';
-      }
-    }
-    return null;
-  }
-
-  String validateRua(String value) {
-    if (value.length < 1) {
-      return 'Digite o nome da rua';
-    }
-    return null;
-  }
-
-  String validateNumero(String value) {
-    if (value.length < 1) {
-      return 'Digite o número do endereço';
-    }
-    String patttern = r'[0,1,2,3,4,5,6,7,8,9]';
-    RegExp regExp = RegExp(patttern);
-    if (!regExp.hasMatch(value)) {
-      return 'O número é inválido';
-    }
-    return null;
-  }
-
-  String validateBairro(String value) {
-    if (value.length < 1) {
-      return 'Digite o bairro';
-    }
-    return null;
-  }
-
-  String validateCidade(String value) {
-    if (value.length < 1) {
-      return 'Digite a cidade';
-    }
-    return null;
-  }
-
-  String validateEstado(String value) {
-    if (value.length < 1) {
-      return 'Informe o estado';
-    }
-    return null;
-  }
-
-  String validateCep(String value) {
-    if (value != null && value.replaceAll(' ', '') != '') {
-      String patttern = r'^\d{5}\-\d{3}$';
-      RegExp regExp = RegExp(patttern);
-      if (!regExp.hasMatch(value)) {
-        return 'O CEP é inválido';
-      }
-    }
     return null;
   }
 

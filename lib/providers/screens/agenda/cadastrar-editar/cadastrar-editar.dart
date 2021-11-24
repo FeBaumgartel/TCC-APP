@@ -5,9 +5,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:tcc_app/helpers/date-helper.dart';
 import 'package:tcc_app/models/evento.dart';
+import 'package:tcc_app/models/grupo.dart';
 import 'package:tcc_app/models/usuario.dart';
 import 'package:tcc_app/screens/agenda/cadastrar-editar/widgets/loading.dart';
 import 'package:tcc_app/services/dao/eventos.dart';
+import 'package:tcc_app/services/dao/grupos.dart';
 import 'package:tcc_app/services/sessao.dart';
 
 class CadastrarEditarProvider extends ChangeNotifier {
@@ -34,7 +36,10 @@ class CadastrarEditarProvider extends ChangeNotifier {
   List<int> usersId = List<int>();
   bool init = true;
   Usuario userAtual = Usuario();
+  GruposService gruposService = new GruposService();
+  List<Grupo> grupos = new List<Grupo>();
 
+  String selectGrupo;  
   TextEditingController controllerDataInicio;
   TextEditingController controllerDataFim;
   TextEditingController controllerTitulo;
@@ -54,6 +59,8 @@ class CadastrarEditarProvider extends ChangeNotifier {
   refresh() => notifyListeners();
 
   Future<void> _build() async {
+    this.grupos = await gruposService.getGruposAll();
+
     this.evento = (eventoParam.id != null) 
       ? await this._eventosService.getEvento(eventoParam.id)
       : Evento();
@@ -103,6 +110,7 @@ class CadastrarEditarProvider extends ChangeNotifier {
       _evento.nome = controllerTitulo.text;
       _evento.dataInicio = (dataInicio.toString()).split('.000')[0];
       _evento.dataFim = (dataFim.toString()).split('.000')[0];
+      _evento.idGrupo = int.parse(selectGrupo);
 
       var res;
       if (evento.id == null) {

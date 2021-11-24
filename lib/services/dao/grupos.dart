@@ -65,6 +65,22 @@ class GruposService extends RepositorioSimples {
     return grupos;
   }
 
+  Future<List<Grupo>> getGruposAll() async {
+    List<Map> maps = await _database.db.query(_tabela);
+
+    if (maps.length == 0) {
+      return new List<Grupo>();
+    }
+
+    List<Grupo> grupos = new List<Grupo>();
+
+    maps.forEach((p) {
+      grupos.add(Grupo.fromMap(p));
+    });
+
+    return grupos;
+  }
+
   Future<Grupo> getGrupo(int id) async {
     String sql =
       '''

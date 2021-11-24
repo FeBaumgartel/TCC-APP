@@ -14,7 +14,7 @@ class ListaEventos extends StatelessWidget {
         children: eventos[selectedDay]
             .map((eventos) => Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF3F559E).withOpacity(0.16),
+                  color: Color(0xFF3F559E).withOpacity(0.8),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 margin:
@@ -26,7 +26,7 @@ class ListaEventos extends StatelessWidget {
                           style: TextStyle(color: Colors.white)),
                       subtitle: Text(
                           DateFormat('dd/MM  HH:mm', 'pt_BR')
-                              .format(DateTime.parse(eventos.data)),
+                              .format(DateTime.parse(eventos.dataInicio)),
                           style: TextStyle(color: Colors.white)),
                       onTap: () {
                         Navigator.push(

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:tcc_app/models/grupo-evento.dart';
 import 'package:tcc_app/models/evento.dart';
 import 'package:tcc_app/services/sincronizacao/atualizacao/repositorio.dart';
 import 'package:tcc_app/services/sincronizacao/atualizacao/evento-database.dart';
@@ -46,7 +45,7 @@ class EventosService extends RepositorioSimples {
   Future<List<Evento>> getEventsDate(String date) async {
     String sql =
       '''
-        SELECT id, nome, strftime(\'%Y-%m-%d\', data_inicio) as data, data_fim, data_inicio
+        SELECT id, id_grupo, nome, strftime(\'%Y-%m-%d\', data_inicio) as data, data_fim, data_inicio
         FROM eventos
         WHERE data = ?
       ''';                 
@@ -88,7 +87,7 @@ class EventosService extends RepositorioSimples {
       String month) async {
     String sql =
         '''
-        SELECT id, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
+        SELECT id, id_grupo, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
         FROM eventos 
         WHERE mes = ?
         ''';
@@ -113,7 +112,7 @@ class EventosService extends RepositorioSimples {
    }
     String sql =
       '''
-      SELECT id, nome, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
+      SELECT id, id_grupo, nome, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
       FROM eventos
       WHERE data IN (${weeks.join(',')})
     ''';
@@ -130,7 +129,7 @@ class EventosService extends RepositorioSimples {
   Future<Evento> getEvento(int id) async {
     String sql =
       '''
-        SELECT id, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
+        SELECT id, id_grupo, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
         FROM eventos
         WHERE id = ?
       ''';

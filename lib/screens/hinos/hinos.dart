@@ -54,7 +54,6 @@ class _HinosPageState extends State<HinosPage> {
     List<Hino> hinos;
 
     hinos = await this._hinosService.getHinos(pagina: _pagina);
-debugPrint('movieTitle: $hinos');
 
     if (hinos.length > 0) {
       if (hinos.length < 10) {

@@ -1,10 +1,14 @@
 
+import 'package:tcc_app/models/grupo.dart';
+import 'package:tcc_app/services/dao/grupos.dart';
 class Evento {
   int id;
   String nome;
   String dataInicio;
   String dataFim;
   String data;
+  int idGrupo;
+  Grupo grupo;
 
   Evento({
     this.id,
@@ -12,6 +16,7 @@ class Evento {
     this.dataInicio,
     this.dataFim,
     this.data,
+    this.idGrupo,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +25,7 @@ class Evento {
       'nome': nome,
       'data_inicio': dataInicio,
       'data_fim': dataFim,
+      'id_grupo': idGrupo,
     };
   }
 
@@ -29,5 +35,13 @@ class Evento {
     dataInicio = map['data_inicio'];
     dataFim = map['data_fim'];
     data = map['data'];
+    idGrupo = map['id_grupo'];
+
+    carregaGrupo();
+  }
+
+  Future<void> carregaGrupo() async {
+    var grupos = new GruposService();
+    this.grupo = await grupos.getGrupo(this.idGrupo);
   }
 }

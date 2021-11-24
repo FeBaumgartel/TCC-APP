@@ -54,7 +54,6 @@ class _GruposPageState extends State<GruposPage> {
     List<Grupo> grupos;
 
     grupos = await this._gruposService.getGrupos(pagina: _pagina);
-debugPrint('movieTitle: $grupos');
 
     if (grupos.length > 0) {
       if (grupos.length < 10) {

@@ -43,9 +43,9 @@ abstract class Theme {
     ),
   );
 
-  static Color primary = Color(0xFF825EE4);
+  static Color primary = Color(0xFF3F559E);
   static Color secondary = Color(0xFFFFCD00);
-  static Color tertiary = Color(0xFFF5E1A4);
+  static Color tertiary = Color(0xFF825EE4);
   static Color primaryContrast = Colors.white;
   static Color primaryLight = primary.withOpacity(0.36);
   static Color primaryOpacity = Color(0xFFccbef4);
