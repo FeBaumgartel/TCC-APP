@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tcc_app/models/usuario.dart';
 import 'package:tcc_app/screens/grupos/widgets/item.dart' as Item;
 import 'package:tcc_app/screens/grupos/widgets/skeletons/grupo-item.dart';
 import 'package:tcc_app/services/dao/grupos.dart';
 import 'package:tcc_app/models/grupo.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:tcc_app/services/sessao.dart';
 
 class Grupos extends StatelessWidget {
   @override
@@ -27,6 +29,8 @@ class _GruposPageState extends State<GruposPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   StreamSubscription _subscription;
 
+  bool exibe = false;
+  Usuario usuario;
   List<Widget> _widgets = List<Widget>();
   List<Grupo> _grupos = List<Grupo>();
   final _scrollController =
@@ -71,6 +75,13 @@ class _GruposPageState extends State<GruposPage> {
   }
 
   Future<List<Widget>> _build() async {
+    final Sessao _sessao = Sessao.create();
+
+    _sessao.getUsuario().then((usuario) {
+      this.usuario = usuario;
+      if (usuario != null && usuario.tipo == 1) exibe = true;
+    });
+    
     this._widgets = new List<Widget>();
     List<Grupo> grupos;
     grupos = await this._getGrupos();
@@ -147,7 +158,9 @@ class _GruposPageState extends State<GruposPage> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Visibility(
+        visible: exibe,
+        child: FloatingActionButton(
               child: Icon(FontAwesomeIcons.plus),
               onPressed: () {
                 Navigator.of(context).pushNamed('/grupos/cadastrar',
@@ -160,7 +173,7 @@ class _GruposPageState extends State<GruposPage> {
                       _future = _build();
                     }));
               },
-            )
+            ),),
     );
   }
 }

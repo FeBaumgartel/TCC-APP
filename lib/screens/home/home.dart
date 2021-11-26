@@ -95,14 +95,24 @@ class _HomePageState extends State<HomePage> {
                           children: <Widget>[
                             model.renderGridItemLinha('Hinos', '/hinos',
                                 icone: FontAwesomeIcons.music),
-                            Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.0)),
-                            model.renderGridItemLinha('Grupos', '/grupos',
-                                icone: FontAwesomeIcons.users),
-                            Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.0)),
-                            model.renderGridItemLinha('Meu Perfil', '/perfil',
-                                icone: FontAwesomeIcons.user)
+                            if (model.usuario != null &&
+                                model.usuario.tipo == 1)
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 5.0)),
+                            if (model.usuario != null &&
+                                model.usuario.tipo == 1)
+                              model.renderGridItemLinha('Grupos', '/grupos',
+                                  icone: FontAwesomeIcons.users),
+                            if (model.usuario != null &&
+                                model.usuario.tipo == 2)
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 5.0)),
+                            if (model.usuario != null &&
+                                model.usuario.tipo == 2)
+                              model.renderGridItemLinha('Meu Perfil', '/perfil',
+                                  icone: FontAwesomeIcons.user)
                           ],
                         ),
                       ),

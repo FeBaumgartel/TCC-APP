@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tcc_app/models/grupo.dart';
+import 'package:tcc_app/models/usuario.dart';
+import 'package:tcc_app/services/sessao.dart';
 import 'package:tcc_app/theme.dart' as ThemeApp;
 import 'package:tcc_app/screens/grupos/visualizar/widgets/fade_on_scroll.dart';
 import 'package:tcc_app/services/dao/grupos.dart';
@@ -28,6 +30,8 @@ class _VisualizarPageState extends State<VisualizarPage> {
   Future<List<Widget>> _future;
   List<Widget> _widgets = List<Widget>();
   dynamic _arguments;
+  bool exibe = false;
+  Usuario usuario;
 
   @override
   void initState() {
@@ -37,6 +41,13 @@ class _VisualizarPageState extends State<VisualizarPage> {
   }
 
   Future<List<Widget>> _build(int id) async {
+    final Sessao _sessao = Sessao.create();
+
+    _sessao.getUsuario().then((usuario) {
+      this.usuario = usuario;
+      if (usuario != null && usuario.tipo == 1) exibe = true;
+    });
+
     _widgets = new List<Widget>();
 
     return _widgets;
@@ -51,42 +62,44 @@ class _VisualizarPageState extends State<VisualizarPage> {
           List<Widget> loaded = snapshot.data;
           return Scaffold(
             key: _scaffoldKey,
-            body: CustomScrollView(controller: _scrollController, slivers: <
-                Widget>[
-              SliverAppBar(
-                  pinned: true,
-                  expandedHeight: 170,
-                  title: Text(_arguments.nome),
-                  flexibleSpace: FadeOnScroll(
-                      scrollController: _scrollController,
-                      fullOpacityOffset: 50,
-                      child: Stack(
-                        children: <Widget>[
-                          if (_arguments.descricao != null &&
-                              _arguments.descricao.replaceAll(" ", "") != "")
-                            Container(
-                              padding: EdgeInsets.only(left: 69, right: 16),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  _arguments.descricao,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+            body: CustomScrollView(
+                controller: _scrollController,
+                slivers: <Widget>[
+                  SliverAppBar(
+                      pinned: true,
+                      expandedHeight: 170,
+                      title: Text(_arguments.nome),
+                      flexibleSpace: FadeOnScroll(
+                          scrollController: _scrollController,
+                          fullOpacityOffset: 50,
+                          child: Stack(
+                            children: <Widget>[
+                              if (_arguments.descricao != null &&
+                                  _arguments.descricao.replaceAll(" ", "") !=
+                                      "")
+                                Container(
+                                  padding: EdgeInsets.only(left: 69, right: 16),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      _arguments.descricao,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                        ],
-                      ))),
-              if (loaded != null)
-                SliverFillRemaining(
-                  child: ListView(
-                    padding: EdgeInsets.only(top: 5),
-                    children: loaded,
-                  ),
-                ),
-            ]),
+                            ],
+                          ))),
+                  if (loaded != null)
+                    SliverFillRemaining(
+                      child: ListView(
+                        padding: EdgeInsets.only(top: 5),
+                        children: loaded,
+                      ),
+                    ),
+                ]),
             floatingActionButton: _bottomButtons(),
           );
         } else {
@@ -97,7 +110,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
   }
 
   Widget _bottomButtons() {
-    return _renderSpeedDial();
+    return Visibility(visible: exibe, child: _renderSpeedDial());
   }
 
   SpeedDial _renderSpeedDial() {
@@ -107,9 +120,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
         onTap: () => Navigator.pushNamed(
           context,
           '/grupos/cadastrar',
-          arguments: <String, dynamic>{
-            "grupo": _arguments
-          },
+          arguments: <String, dynamic>{"grupo": _arguments},
         ).then(
           (value) => setState(
             () {

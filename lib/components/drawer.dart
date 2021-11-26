@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tcc_app/models/usuario.dart';
 import 'package:tcc_app/providers/components/drawer.dart';
 import 'package:tcc_app/providers/sessao.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:tcc_app/services/sessao.dart';
 
 class DrawerApp extends StatelessWidget {
+  final Sessao _sessao = Sessao.create();
 
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<DrawerProvider>(
@@ -66,14 +68,17 @@ class DrawerApp extends StatelessWidget {
               Divider(
                 height: 1,
               ),
-              ItemDrawer(
-                nome: 'Grupos',
-                rota: '/grupos',
-                icone: FontAwesomeIcons.users,
-              ),
+              if (model.usuario != null && model.usuario.tipo == 1)
+                ItemDrawer(
+                  nome: 'Grupos',
+                  rota: '/grupos',
+                  icone: FontAwesomeIcons.users,
+                ),
+              if (model.usuario != null && model.usuario.tipo == 1)
               Divider(
                 height: 1,
               ),
+              if (model.usuario != null && model.usuario.tipo == 2)
               ItemDrawer(
                 nome: 'Meu Perfil',
                 rota: '/perfil',

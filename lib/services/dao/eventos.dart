@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:tcc_app/models/evento.dart';
+import 'package:tcc_app/models/usuario.dart';
+import 'package:tcc_app/services/sessao.dart';
 import 'package:tcc_app/services/sincronizacao/atualizacao/repositorio.dart';
 import 'package:tcc_app/services/sincronizacao/atualizacao/evento-database.dart';
 import 'package:sqflite/sql.dart';
@@ -10,6 +12,7 @@ import 'package:tcc_app/services/database.dart' as data;
 import 'package:sqflite/sqlite_api.dart';
 
 class EventosService extends RepositorioSimples {
+  final Sessao _sessao = Sessao.create();
   final data.Database _database = data.Database.create();
   final String _tabela = 'eventos';
 
@@ -85,6 +88,8 @@ class EventosService extends RepositorioSimples {
 
   Future<List<Evento>> getEventsMonth(
       String month) async {
+        
+    final usuario = await _sessao.getUsuario();
     String sql =
         '''
         SELECT id, id_grupo, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
@@ -127,7 +132,9 @@ class EventosService extends RepositorioSimples {
   }
 
   Future<Evento> getEvento(int id) async {
-    String sql =
+    
+    final usuario = await _sessao.getUsuario();
+    final sql =
       '''
         SELECT id, id_grupo, nome, strftime('%m/%Y', data_inicio) as mes, strftime('%Y-%m-%d', data_inicio) as data, data_fim, data_inicio
         FROM eventos

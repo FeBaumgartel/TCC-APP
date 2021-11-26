@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tcc_app/models/usuario.dart';
 import 'package:tcc_app/screens/hinos/widgets/item.dart' as Item;
 import 'package:tcc_app/screens/hinos/widgets/skeletons/hino-item.dart';
 import 'package:tcc_app/services/dao/hinos.dart';
 import 'package:tcc_app/models/hino.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:tcc_app/services/sessao.dart';
 
 class Hinos extends StatelessWidget {
   @override
@@ -27,6 +29,8 @@ class _HinosPageState extends State<HinosPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   StreamSubscription _subscription;
 
+  bool exibe = false;
+  Usuario usuario;
   List<Widget> _widgets = List<Widget>();
   List<Hino> _hinos = List<Hino>();
   final _scrollController =
@@ -71,6 +75,13 @@ class _HinosPageState extends State<HinosPage> {
   }
 
   Future<List<Widget>> _build() async {
+    final Sessao _sessao = Sessao.create();
+
+    _sessao.getUsuario().then((usuario) {
+      this.usuario = usuario;
+      if (usuario != null && usuario.tipo == 1) exibe = true;
+    });
+
     this._widgets = new List<Widget>();
     List<Hino> hinos;
     hinos = await this._getHinos();
@@ -147,20 +158,23 @@ class _HinosPageState extends State<HinosPage> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-              child: Icon(FontAwesomeIcons.plus),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/hinos/cadastrar',
-                    arguments: <String, dynamic>{
-                      "hino": null
-                    }).then((value) => this.setState(() {
-                      _scrollController.jumpTo(0);
-                      _pagina = 1;
-                      _widgets = List();
-                      _future = _build();
-                    }));
-              },
-            )
+      floatingActionButton: Visibility(
+        visible: exibe,
+        child: FloatingActionButton(
+          child: Icon(FontAwesomeIcons.plus),
+          onPressed: () {
+            Navigator.of(context).pushNamed('/hinos/cadastrar',
+                arguments: <String, dynamic>{
+                  "hino": null
+                }).then((value) => this.setState(() {
+                  _scrollController.jumpTo(0);
+                  _pagina = 1;
+                  _widgets = List();
+                  _future = _build();
+                }));
+          },
+        ),
+      ),
     );
   }
 }

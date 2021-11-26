@@ -16,6 +16,13 @@ class HomeProvider extends ChangeNotifier {
 
   HomeProvider(this.context) {
     _init();
+    
+    final Sessao _sessao = Sessao.create();
+
+    _sessao.getUsuario().then((usuario) {
+      this.usuario = usuario;
+      notifyListeners();
+    });
   }
 
   _init() async {

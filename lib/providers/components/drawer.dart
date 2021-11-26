@@ -21,6 +21,13 @@ class DrawerProvider extends ChangeNotifier {
       packageInfo = value;
       notifyListeners();
     });
+
+    final Sessao _sessao = Sessao.create();
+
+    _sessao.getUsuario().then((usuario) {
+      this.usuario = usuario;
+      notifyListeners();
+    });
   }
 
   DateTime get ultimaSincronizacao => _ultimaSincronizacao;
