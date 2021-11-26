@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 
 enum RelacionamentosUsuario { grupo }
 
@@ -6,33 +7,36 @@ class Usuario {
   String nome;
   String email;
   String senha;
-  int id_grupo;
+  int tipo;
+  int idGrupo;
 
   Usuario({
     this.id,
     this.nome,
     this.email,
+    this.tipo,
+    this.idGrupo,
     this.senha,
-    this.id_grupo,
   });
-  
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'nome': nome,
       'email': email,
       'senha': senha,
-      'id_grupo': id_grupo,
+      'tipo': tipo,
+      'id_grupo': idGrupo,
     };
   }
-
 
   Usuario.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     nome = map['nome'];
     email = map['email'];
     senha = map['senha'];
-    id_grupo = map['id_grupo'];
+    tipo = map['tipo'];
+    idGrupo = map['id_grupo'];
   }
 
   // função pra autenticação e sessão do usuário
@@ -41,17 +45,19 @@ class Usuario {
     nome = json['nome'];
     email = json['email'];
     senha = json['senha'];
-    id_grupo = json['id_grupo'];
+    tipo = json['tipo'];
+    idGrupo = json['id_grupo'];
   }
 
   // função pra autenticação e sessão do usuário
   Map<String, dynamic> toJson() {
-    return <String, dynamic> {
+    return <String, dynamic>{
       'id': id,
       'nome': nome,
       'email': email,
       'senha': senha,
-      'id_grupo': id_grupo,
+      'tipo': tipo,
+      'id_grupo': idGrupo,
     };
   }
 }

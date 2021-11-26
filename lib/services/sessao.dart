@@ -61,11 +61,7 @@ class Sessao {
     _storage.forEach((String chave, String valor) {
       dynamic obj = jsonDecode(valor);
       usuarios.add(
-        new Usuario(
-          id: obj['id'],
-          nome: obj['nome'],
-          email: obj['email']
-        ),
+        new Usuario(id: obj['id'], nome: obj['nome'], email: obj['email']),
       );
     });
 
@@ -73,17 +69,22 @@ class Sessao {
   }
 
   Future<Usuario> getUsuario() async {
-    return await this._storage.read(key: 'usuario').then((String usuario) async {
-      if(usuario != null) {
+    return await this
+        ._storage
+        .read(key: 'usuario')
+        .then((String usuario) async {
+      if (usuario != null) {
         dynamic obj = jsonDecode(usuario);
 
         return new Usuario(
           id: obj['id'],
           nome: obj['nome'],
-          email: obj['email']
+          email: obj['email'],
+          tipo: obj['tipo'],
+          idGrupo: obj['id_grupo'],
         );
       }
-      
+
       return null;
     });
   }

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tcc_app/services/database.dart' as data;
 
-
 class UsuariosService {
   final data.Database _database = data.Database.create();
   final String _tabela = 'usuarios';
@@ -24,7 +23,7 @@ class UsuariosService {
 
     if (maps.length > 0) {
       var usuario = Usuario.fromMap(maps.first);
-      
+
       return usuario;
     }
 
@@ -61,11 +60,11 @@ class UsuariosService {
       whereArgs: [email, senha],
       orderBy: 'id DESC',
     );
-
+    if (maps.length == 0) return null;
     Usuario usuario = new Usuario();
 
     usuario = Usuario.fromMap(maps.first);
-      
+
     return usuario;
   }
 }
